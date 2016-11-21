@@ -1,3 +1,5 @@
+use dagss;
+
 -- Ajustar el contador de IDs para que no colision con los IDs anteriores
 UPDATE USUARIO_GEN set GEN_VAL=100 WHERE GEN_NAME='USUARIO_GEN';
 
