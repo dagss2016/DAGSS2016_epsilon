@@ -1,5 +1,3 @@
-use dagss;
-
 -- Ajustar el contador de IDs para que no colision con los IDs anteriores
 UPDATE USUARIO_GEN set GEN_VAL=100 WHERE GEN_NAME='USUARIO_GEN';
 
@@ -43,4 +41,3 @@ INSERT INTO `FARMACIA`(`ID`,`FECHAALTA`,`NIF`,`NOMBREFARMACIA`,
    VALUES (4,'2016-11-11 01:04:42','33333333C','Farmacia de prueba',
            '/QpUw+ZRH3ndoNb3N4gRpT5cz0C7pT9v','FARMACIA','2016-11-11 01:04:42',
            '12345','C/. Farmacia, nº 2, 4º N','Coruña','Coruña');
-

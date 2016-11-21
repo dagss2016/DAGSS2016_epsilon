@@ -1,10 +1,6 @@
 --
 -- Table structure for table `ADMINISTRADOR`
 --
-create database dagss;
-grant all privileges on dagss.* to dagss@localhost identified by "dagss";
-
-use dagss;
 
 DROP TABLE IF EXISTS `ADMINISTRADOR`;
 CREATE TABLE `ADMINISTRADOR` (
