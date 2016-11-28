@@ -33,12 +33,13 @@ a:link:hover, a:visited:hover  {
 /* Margenes y Colores de plantilla global */
 #pagina{
     width: 100%;
-    margin: 5px auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #encabezado{
-    background-color: #036fab;
-    color: white;
+    background-color: #ffffff;
+    color: black;
     padding: 2px;
     margin: 0px 0px 5px 0px;
     text-align: center;
@@ -48,16 +49,18 @@ a:link:hover, a:visited:hover  {
 }
 
 #cuerpo{
+    
     float: left;
     width: 100%;
     background-color: #cfcfcf;
+    border-radius: 5px 5px 0px 0px;
 }
 
 #contenido{
     /* margin-left: 180px; */
     background-color: #cfcfcf;
     /* height: 200px; */
-    padding: 5px 0px 5px 0px;
+    padding: 5px 5px 5px 0px;
 }
 
 #izquierda{
@@ -72,11 +75,10 @@ a:link:hover, a:visited:hover  {
     float: left;
     width: 100%;
 
-    background-color: #c2dfef;
+    background-color: black;
+    color: white;
     text-align: center;
-    
-    padding: 2px;
-    margin: 5px 0px 0px 0px;    
+    border-radius: 0px 0px 5px 5px;
 }
 
 .errores {
