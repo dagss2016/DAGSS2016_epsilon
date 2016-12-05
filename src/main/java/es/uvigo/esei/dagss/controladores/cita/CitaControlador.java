@@ -12,6 +12,7 @@ import es.uvigo.esei.dagss.dominio.entidades.Paciente;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -48,7 +49,7 @@ public class CitaControlador implements Serializable {
     
     @PostConstruct
     public void inicializar() {
-        this.citas = citaDAO.buscarTodosByMedico(medicoControlador.getMedicoActual().getId());
+        this.citas = citaDAO.buscarTodosByMedico(medicoControlador.getMedicoActual().getId(),Calendar.getInstance().getTime());
     }
     
     public Cita getCitaActual() {
@@ -77,7 +78,7 @@ public class CitaControlador implements Serializable {
     public List<Cita> getCitas() {
         return citas;
     }
-
+    
     public void setCitas(List<Cita> citas) {
         this.citas = citas;
     }
