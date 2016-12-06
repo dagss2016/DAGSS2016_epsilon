@@ -8,8 +8,8 @@
 
     <ui:composition>
 
-        <p:dialog id="dialogoVer" widgetVar="DialogoVer" modal="true" resizable="false" appendTo="@(body)" header="Datos Cita 'manual'">
-            <h:form id="formularioVer">
+        <p:dialog id="dialogoAtender" widgetVar="dialogoAtender" modal="true" resizable="false" appendTo="@(body)" header="Datos Cita 'manual'">
+            <h:form id="formularioAtender">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{gestionCitasControlador.citaActual != null}">
                         <p:outputLabel value="ID:" for="id"/>
@@ -41,7 +41,7 @@
                         <h:outputText id="estado" value="#{gestionCitasControlador.citaActual.estado}"/>
                     </p:panelGrid>
                     
-                    <p:commandButton value="Cerrar" onclick="PF('DialogoVer').hide()"/>
+                    <p:commandButton value="Cerrar" onclick="PF('DialogoAtender').hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

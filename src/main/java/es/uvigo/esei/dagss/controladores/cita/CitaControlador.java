@@ -7,7 +7,10 @@ package es.uvigo.esei.dagss.controladores.cita;
 
 import es.uvigo.esei.dagss.controladores.medico.MedicoControlador;
 import es.uvigo.esei.dagss.dominio.daos.CitaDAO;
+import es.uvigo.esei.dagss.dominio.daos.MedicoDAO;
+import es.uvigo.esei.dagss.dominio.daos.PacienteDAO;
 import es.uvigo.esei.dagss.dominio.entidades.Cita;
+import es.uvigo.esei.dagss.dominio.entidades.EstadoCita;
 import es.uvigo.esei.dagss.dominio.entidades.Paciente;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -29,11 +32,19 @@ import javax.inject.Inject;
 @SessionScoped
 public class CitaControlador implements Serializable {
  
+    static final public Integer DURACION_CITA_POR_DEFECTO = 15; // Citas de 15 minutos
+
+    //@Inject
+    //CitaDAO citaDAO;
+
+    @Inject
+    MedicoDAO medicoDAO;
+    
+    @Inject
+    PacienteDAO pacienteDAO;
+
     List<Cita> citas;
     Cita citaActual;
-    
-    private Integer id;
-    private String fecha;
 
     @Inject
     private MedicoControlador medicoControlador;
@@ -52,6 +63,10 @@ public class CitaControlador implements Serializable {
         this.citas = citaDAO.buscarTodosByMedico(medicoControlador.getMedicoActual().getId(),Calendar.getInstance().getTime());
     }
     
+    public EstadoCita[]  getEstadosCitas() {
+        return EstadoCita.values();
+    }
+    
     public Cita getCitaActual() {
         return citaActual;
     }
@@ -60,36 +75,11 @@ public class CitaControlador implements Serializable {
         this.citaActual = citaActual;
     }
 
-    private Cita recuperarDatosCita() {
-        Cita cita = null;
-        if (id != null) {
-            cita = citaDAO.buscarPorId(id);
-        }
-        /*if ((cita == null) && (numeroColegiado != null)) {
-            cita = citaDAO.buscarPorNumeroColegiado(numeroColegiado);
-        }*/
-        if ((cita == null) && (fecha != null)) {
-            cita = citaDAO.buscarPorFecha(fecha);
-        }
-        
-        return cita;
-    }    
-
     public List<Cita> getCitas() {
         return citas;
     }
     
     public void setCitas(List<Cita> citas) {
         this.citas = citas;
-    }
-
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
-    
-    
+    }    
 }

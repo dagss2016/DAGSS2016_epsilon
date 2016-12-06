@@ -60,15 +60,14 @@ a:link:hover, a:visited:hover  {
     /* margin-left: 180px; */
     background-color: #cfcfcf;
     /* height: 200px; */
-    padding: 5px 5px 5px 0px;
+    /*padding: 5px 5px 5px 0px;*/
+    /*float:left;*/
+    /*width:auto;*/
 }
 
 #izquierda{
-    float: left;
-    /* width: 170px; */
-    margin-left: 0%;
-    /* height: 200px; */
-    padding: 5px 0px 5px 5px;
+
+    /*width: auto;*/
 }
 
 #pie{
