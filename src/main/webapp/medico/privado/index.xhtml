@@ -56,12 +56,13 @@
 
                             <f:facet name="footer">
                                 <p:commandButton id="botonVer"    icon="ui-icon-search" value="Ver Datos Paciente"    update=":formularioVer" oncomplete="PF('DialogoVer').show()" disabled="#{empty citaControlador.citaActual}"/>
-                                <p:commandButton id="botonAtender" icon="ui-icon-check"  value="Atender" update=":formularioAtender" oncomplete="PF('DialogoAtender').show()" disabled="#{empty citaControlador.citaActual}"/>
+                                <p:button id="botonAtender" icon="ui-icon-check"  value="Atender" outcome="prescripciones/listadoPrescripciones" disabled="#{empty citaControlador.citaActual}"/>
+                            <!-- TODO: Que controle que el boton atender solo esté activo para citas pendientes -->
+                            <!-- cita.estado.equals("PENDIENTE")} -->
                             </f:facet>
                         </p:dataTable>
                 </h:form>         
                 <ui:include src="pacientes/fragmentoDialogoVer.xhtml"/>
-                <ui:include src="citas/fragmentoDialogoAtender.xhtml"/>                
             </ui:define>
         </ui:composition>
     </body>
