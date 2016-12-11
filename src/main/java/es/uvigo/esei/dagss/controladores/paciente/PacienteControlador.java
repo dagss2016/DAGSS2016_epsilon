@@ -12,7 +12,6 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -87,6 +86,11 @@ public class PacienteControlador implements Serializable {
         this.password = password;
     }
 
+    public Paciente doBuscarPorTarjetaSanitaria() {
+        setPacienteActual(pacienteDAO.buscarPorTarjetaSanitaria(numeroTarjetaSanitaria));
+        return getPacienteActual();
+    }
+    
     private boolean parametrosAccesoInvalidos() {
         return (((dni == null) && (numeroSeguridadSocial == null) && (numeroTarjetaSanitaria == null))
                 || (password == null));
