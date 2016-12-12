@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package es.vigo.esei.dagss.controladores.prescripcion;
+package es.uvigo.esei.dagss.controladores.prescripcion;
 
 import es.uvigo.esei.dagss.controladores.cita.CitaControlador;
 import es.uvigo.esei.dagss.controladores.medico.MedicoControlador;
@@ -16,6 +16,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Inject;
+import javax.persistence.Column;
+import javax.validation.constraints.Size;
 
 
 /**
@@ -30,6 +32,7 @@ public class PrescripcionControlador implements Serializable {
 
     List<Prescripcion> prescripciones;
     Prescripcion prescripcionActual;
+    String numeroTarjetaSanitaria;
     
     @Inject
     private MedicoControlador medicoControlador;
@@ -46,7 +49,6 @@ public class PrescripcionControlador implements Serializable {
     public PrescripcionControlador() {
     }
     
-    @PostConstruct
     public void inicializar() {       
         this.prescripciones = prescripcionDAO.buscarPorPaciente(citaControlador.getCitaActual().getPaciente().getId(),medicoControlador.getMedicoActual().getId());
     }
@@ -65,5 +67,17 @@ public class PrescripcionControlador implements Serializable {
 
     public void setPrescripcionActual(Prescripcion prescripcionActual) {
         this.prescripcionActual = prescripcionActual;
-    }   
+    }
+
+    public String getNumeroTarjetaSanitaria() {
+        return numeroTarjetaSanitaria;
+    }
+
+    public void setNumeroTarjetaSanitaria(String numeroTarjetaSanitaria) {
+        this.numeroTarjetaSanitaria = numeroTarjetaSanitaria;
+    }
+    
+    public void doBuscarPacientePorTarjetaSanitaria() {
+        setPrescripciones(prescripcionDAO.buscarPorTarjetaSanitaria(numeroTarjetaSanitaria));
+    }
 }

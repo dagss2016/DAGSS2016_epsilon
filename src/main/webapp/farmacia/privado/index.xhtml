@@ -21,12 +21,15 @@
             <ui:define name="contenido">
                 <h:form>
                     <h:panelGrid>
-                        <h:inputText id="tarjeta_sanitaria" value="#{pacienteControlador.numeroTarjetaSanitaria}" title="Tarjeta Sanitaria" required="true" requiredMessage="Debe introducirse una tarjeta sanitaria" />
-                        <h:commandButton value="buscar" action="#{pacienteControlador.doBuscarPorTarjetaSanitaria()}"/>
+                        <h:inputText id="tarjeta_sanitaria" value="#{prescripcionControlador.numeroTarjetaSanitaria}" title="Tarjeta Sanitaria" required="true" requiredMessage="Debe introducirse una tarjeta sanitaria" />
+                        <h:commandButton value="buscar" action="#{prescripcionControlador.doBuscarPacientePorTarjetaSanitaria()}"/>
                     </h:panelGrid>
                     
                     <h:panelGrid>
-                        <h:outputText value="#{pacienteControlador.pacienteActual.nombre}"/>
+                        <ui:repeat value="#{prescripcionControlador.prescripciones}"
+                         var="prescripcion">
+                            <h:outputText value="#{prescripcion.paciente.nombre}"/>
+                        </ui:repeat>
                     </h:panelGrid>
                 </h:form>
             </ui:define>

@@ -29,5 +29,13 @@ public class PrescripcionDAO extends GenericoDAO<Prescripcion> {
         return q.getResultList();
     }
     
+    public List<Prescripcion> buscarPorTarjetaSanitaria(String numeroTarjetaSanitaria) {
+        TypedQuery<Prescripcion> q = em.createQuery("SELECT p FROM Prescripcion AS p "
+                + "  WHERE p.paciente.numeroTarjetaSanitaria = :numeroTarjetaSanitaria", Prescripcion.class);
+        q.setParameter("numeroTarjetaSanitaria", numeroTarjetaSanitaria);
+
+        return q.getResultList();
+    }
+    
      
 }

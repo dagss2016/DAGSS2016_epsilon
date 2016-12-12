@@ -85,11 +85,6 @@ public class PacienteControlador implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public Paciente doBuscarPorTarjetaSanitaria() {
-        setPacienteActual(pacienteDAO.buscarPorTarjetaSanitaria(numeroTarjetaSanitaria));
-        return getPacienteActual();
-    }
     
     private boolean parametrosAccesoInvalidos() {
         return (((dni == null) && (numeroSeguridadSocial == null) && (numeroTarjetaSanitaria == null))
