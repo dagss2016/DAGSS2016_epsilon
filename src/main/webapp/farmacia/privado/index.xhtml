@@ -28,7 +28,8 @@
                     <h:panelGrid>
                         <ui:repeat value="#{prescripcionControlador.prescripciones}"
                          var="prescripcion">
-                            <h:outputText value="#{prescripcion.paciente.nombre}"/>
+                            <h:outputText value="#{prescripcion.medico.nombre}"/>
+                            <h:outputText value="#{prescripcion.medicamento.nombre}"/>
                         </ui:repeat>
                     </h:panelGrid>
                 </h:form>
