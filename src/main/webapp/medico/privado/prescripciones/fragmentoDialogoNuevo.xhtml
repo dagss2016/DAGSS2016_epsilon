@@ -6,42 +6,32 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition>
-        <p:dialog id="dialogoNuevo" widgetVar="DialogoNuevo" modal="true" resizable="false" appendTo="@(body)" header="Nueva Prescripcion">
+        <p:dialog id="dialogoNuevo" widgetVar="DialogoNuevo" modal="true" resizable="false" appendTo="@(body)" header="Nueva Prescripción">
             <h:form id="formularioNuevo">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{prescripcionControlador.prescripcionActual != null}">
-
-                        <p:outputLabel value="Paciente:" for="paciente"/>
-                        <p:selectOneMenu id="paciente" value="#{prescripcionControlador.prescripcionActual.paciente}"
-                                         converter="omnifaces.SelectItemsConverter">                
-                            <f:selectItems var="itemPaciente" value="#{prescripcionControlador.listadoPacientes}"                                           
-                                           itemValue="#{itemPaciente}" 
-                                           itemLabel="#{itemPaciente.apellidos}, #{itemPaciente.nombre} (#{itemPaciente.direccion.localidad}) DNI: #{itemPaciente.dni}" />
-                        </p:selectOneMenu>  
-
-                        
-                        <p:outputLabel value="Fecha Inicio:" for="fechaInicio"/>
-                        <p:calendar id="fechaInicio" value="#{prescripcionControlador.prescripcionActual.fechaInicio}"/>
-                                               
-                        <p:outputLabel value="Fecha Fin:" for="fechaFin"/>
-                        <p:calendar id="fechaFin" value="#{prescripcionControlador.prescripcionActual.fechaFin}"/>
-                        
                         <p:outputLabel value="Medicamento:" for="medicamento"/>
                         <p:selectOneMenu id="medicamento" value="#{prescripcionControlador.prescripcionActual.medicamento}"
                                          converter="omnifaces.SelectItemsConverter">                
-                            <f:selectItems var="itemMedicamento" value="#{prescripcionControlador.listadoMedicamentos}"                                           
+                            <f:selectItems var="itemMedicamento" value="#{prescripcionControlador.medicamentos}"                                           
                                            itemValue="#{itemMedicamento}" 
-                                           itemLabel="#{itemMedicamento.fabricante}, #{itemMedicamento.nombre}" />
-                        </p:selectOneMenu>  
-
+                                           itemLabel="#{itemMedicamento.nombre} (#{itemMedicamento.fabricante})" />
+                        </p:selectOneMenu> 
+                                                
                         <p:outputLabel value="Dosis:" for="dosis"/>
-                        <h:outputText id="dosis" value="#{prescripcionControlador.prescripcionActual.dosis}"/>
+                        <p:inputText id="dosis" value="#{prescripcionControlador.prescripcionActual.dosis}" required="true"/>
 
+                        <p:outputLabel value="Fecha Inicio:" for="fechaInicio"/>
+                        <p:calendar id="fechaInicio" value="#{prescripcionControlador.prescripcionActual.fechaInicio}" required="true"/>
+                        
+                        <p:outputLabel value="Fecha Fin:" for="fechaFin"/>
+                        <p:calendar id="fechaFin" value="#{prescripcionControlador.prescripcionActual.fechaFin}" required="true"/>
+                        
                         <p:outputLabel value="Indicaciones:" for="indicaciones"/>
-                        <p:inputText id="indicaciones" value="#{prescripcionControlador.prescripcionActual.indicaciones}">
-                        </p:inputText>
+                        <p:inputText id="indicaciones" value="#{prescripcionControlador.prescripcionActual.indicaciones}" required="true"/>
 
                     </p:panelGrid>
+                    <br></br>
                     <p:commandButton value="Guardar" actionListener="#{prescripcionControlador.doGuardarNuevo()}"  
                                      update="display,:formularioListado:tablaListado,:mensajes" 
                                      oncomplete="PF('DialogoNuevo').hide()"/>
@@ -50,6 +40,6 @@
             </h:form>
         </p:dialog>
 
-    </ui:composition>
+    </ui:composition>  
 </html>
 

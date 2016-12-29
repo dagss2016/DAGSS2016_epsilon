@@ -6,6 +6,10 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{citaControlador.citasHoy()}"/>
+    </f:metadata>
+
     <body>
 
         <ui:composition template="/plantillas/plantillaComun.xhtml">
@@ -19,50 +23,15 @@
             </ui:define>
 
             <ui:define name="contenido">
-                
+
                 <p:growl id="mensajes" life="3000" />
 
-                <h:form id="formularioListado">     
-                        <p:dataTable id="tablaListado"
-                                     value="#{citaControlador.citas}"
-                                     var="cita" 
-                                     selection="#{citaControlador.citaActual}"
-                                     selectionMode="single" 
-                                     paginator="true" paginatorPosition="bottom" rows="10" rowKey="#{cita.id}">
+                <h1>[#{medicoControlador.medicoActual.centroSalud.nombre}]</h1>
 
-                            <p:ajax event="rowSelect"   update="botonVer botonAtender"/>
-
-                            <f:facet name="header">
-                                <h:outputText value="Agenda de Hoy" style="font-size: 40px"/>
-                            </f:facet>                        
-
-                            <p:column headerText="Hora">
-                                <p:outputLabel value="#{cita.hora}">
-                                    <f:convertDateTime pattern="hh:mm"/>
-                                </p:outputLabel>
-                            </p:column>
-                            
-                            <p:column headerText="Paciente">
-                                <p:outputLabel value="#{cita.paciente.apellidos}, #{cita.paciente.nombre}" />
-                            </p:column>                                    
-                            
-                            <p:column headerText="Duracion">
-                                <p:outputLabel value="#{cita.duracion} "/>
-                            </p:column>
-
-                            <p:column headerText="Estado">
-                                <p:outputLabel value="#{cita.estado} "/>
-                            </p:column>
-
-                            <f:facet name="footer">
-                                <p:commandButton id="botonVer"    icon="ui-icon-search" value="Ver Datos Paciente"    update=":formularioVer" oncomplete="PF('DialogoVer').show()" disabled="#{empty citaControlador.citaActual}"/>
-                                <p:button id="botonAtender" icon="ui-icon-check"  value="Atender" outcome="prescripciones/listadoPrescripciones" disabled="#{empty citaControlador.citaActual}"/>
-                            <!-- TODO: Que controle que el boton atender solo esté activo para citas pendientes -->
-                            <!-- cita.estado.equals("PENDIENTE")} -->
-                            </f:facet>
-                        </p:dataTable>
-                </h:form>         
-                <ui:include src="pacientes/fragmentoDialogoVer.xhtml"/>
+                <h2>Bienvenido #{medicoControlador.medicoActual.nombre} #{medicoControlador.medicoActual.apellidos} </h2>
+                <ul>
+                    <li>Hoy Tienes #{citaControlador.citas.size()} Citas para tí, capullo</li>
+                </ul>
             </ui:define>
         </ui:composition>
     </body>

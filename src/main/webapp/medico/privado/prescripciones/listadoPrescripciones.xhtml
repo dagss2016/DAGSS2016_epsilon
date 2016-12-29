@@ -6,6 +6,10 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
+      <f:metadata>
+          <f:event type="preRenderView" listener="#{prescripcionControlador.prescripcionesPaciente()}"/>
+      </f:metadata>
+    
     <body>
 
         <ui:composition template="/plantillas/plantillaComun.xhtml">
@@ -30,15 +34,11 @@
                                      selectionMode="single" 
                                      paginator="true" paginatorPosition="bottom" rows="10" rowKey="#{prescripcion.id}">
 
-                            <p:ajax event="rowSelect"/>
+                            <p:ajax event="rowSelect" update="botonNuevo botonVer botonEditar botonBorrar"/>
 
                             <f:facet name="header">
                                 <h:outputText value="Prescripciones para D/Dña #{citaControlador.citaActual.paciente.nombre} #{citaControlador.citaActual.paciente.apellidos}" style="font-size: 20px"/>
-                            </f:facet>                        
-
-                            <p:column headerText="Id">
-                                <p:outputLabel value="#{prescripcion.id}"/>
-                            </p:column>
+                            </f:facet>                       
                             
                             <p:column headerText="Medicamento">
                                 <p:outputLabel value="#{prescripcion.medicamento.nombre} "/>
@@ -50,7 +50,7 @@
                                 </p:outputLabel>
                             </p:column> 
                             <p:column headerText="Fecha Fin">
-                                <p:outputLabel value="#{prescripcion.fechaFin} ">
+                                <p:outputLabel value="#{prescripcion.fechaFin}">
                                     <f:convertDateTime dateStyle="short"/>
                                 </p:outputLabel>
                             </p:column>
@@ -66,7 +66,7 @@
                                 <p:commandButton id="botonNuevo"  icon="ui-icon-plus"   value="Nueva"  actionListener="#{prescripcionControlador.doNuevo()}" update=":formularioNuevo" oncomplete="PF('DialogoNuevo').show()"/>
                                 <p:commandButton id="botonVer"    icon="ui-icon-search" value="Ver"    update=":formularioVer" oncomplete="PF('DialogoVer').show()" disabled="#{empty prescripcionControlador.prescripcionActual}"/>
                                 <p:commandButton id="botonEditar" icon="ui-icon-pencil" value="Editar" update=":formularioEditar" oncomplete="PF('DialogoEditar').show()" disabled="#{empty prescripcionControlador.prescripcionActual}"/>
-                                <p:commandButton id="botonBorrar" icon="ui-icon-trash"  value="Borrar" actionListener="#{prescripcionControlador.doEliminar()}" update=":mensajes,tablaAtender" disabled="#{empty prescripcionControlador.prescripcionActual}"/>
+                                <p:commandButton id="botonBorrar" icon="ui-icon-trash"  value="Borrar" actionListener="#{prescripcionControlador.doEliminar()}" update=":mensajes,tablaListado" disabled="#{empty prescripcionControlador.prescripcionActual}"  onclick="return confirm('¿Borrar Prescripción?')"/>
                             </f:facet>
                         </p:dataTable>
                 </h:form>   

@@ -5,7 +5,7 @@
 package es.uvigo.esei.dagss.dominio.daos;
 
 import es.uvigo.esei.dagss.dominio.entidades.Cita;
-import java.util.Date;
+import java.util.Calendar;
 //import es.uvigo.esei.dagss.dominio.entidades.Medico;
 import java.util.List;
 import javax.ejb.LocalBean;
@@ -40,11 +40,11 @@ public class CitaDAO  extends GenericoDAO<Cita>{
         return q.getResultList();
     }
     
-    public List<Cita> buscarTodosByMedico(Long medico_Id, Date hoy) {
+    public List<Cita> buscarTodosByMedico(Long medico_Id) {
         TypedQuery<Cita> q = em.createQuery("SELECT m FROM Cita AS m "
                 + "  WHERE m.medico.id = :medico_Id AND m.fecha = :hoy" + " ORDER BY m.hora DESC", Cita.class);
         q.setParameter("medico_Id",medico_Id);
-        q.setParameter("hoy",hoy);        
+        q.setParameter("hoy",Calendar.getInstance().getTime());        
         return q.getResultList();    
     }
 

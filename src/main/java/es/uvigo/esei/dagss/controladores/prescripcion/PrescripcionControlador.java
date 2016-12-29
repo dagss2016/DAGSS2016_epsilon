@@ -7,7 +7,9 @@ package es.uvigo.esei.dagss.controladores.prescripcion;
 
 import es.uvigo.esei.dagss.controladores.cita.CitaControlador;
 import es.uvigo.esei.dagss.controladores.medico.MedicoControlador;
+import es.uvigo.esei.dagss.dominio.daos.MedicamentoDAO;
 import es.uvigo.esei.dagss.dominio.daos.PrescripcionDAO;
+import es.uvigo.esei.dagss.dominio.entidades.Medicamento;
 import es.uvigo.esei.dagss.dominio.entidades.Prescripcion;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -16,8 +18,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Inject;
-import javax.persistence.Column;
-import javax.validation.constraints.Size;
 
 
 /**
@@ -38,6 +38,9 @@ public class PrescripcionControlador implements Serializable {
     private MedicoControlador medicoControlador;
     
     @Inject
+    MedicamentoDAO medicamentoDAO;
+    
+    @Inject
     private CitaControlador citaControlador;
   
     @EJB
@@ -48,8 +51,12 @@ public class PrescripcionControlador implements Serializable {
      */
     public PrescripcionControlador() {
     }
-    
+    @PostConstruct
     public void inicializar() {       
+    }
+    
+    public void prescripcionesPaciente() {
+        
         this.prescripciones = prescripcionDAO.buscarPorPaciente(citaControlador.getCitaActual().getPaciente().getId(),medicoControlador.getMedicoActual().getId());
     }
     
@@ -80,4 +87,44 @@ public class PrescripcionControlador implements Serializable {
     public void doBuscarPacientePorTarjetaSanitaria() {
         setPrescripciones(prescripcionDAO.buscarPorTarjetaSanitaria(numeroTarjetaSanitaria));
     }
+    
+    public void doEliminar() {
+        prescripcionDAO.eliminar(prescripcionActual);
+        prescripciones = prescripcionDAO.buscarPorPaciente(citaControlador.getCitaActual().getPaciente().getId(),medicoControlador.getMedicoActual().getId());
+    }
+    
+    public void doNuevo() {
+        prescripcionActual = new Prescripcion(); // Prescripción vacía
+        prescripcionActual.setMedico(medicoControlador.getMedicoActual());
+        prescripcionActual.setPaciente(citaControlador.getCitaActual().getPaciente());
+        /*medicoActual.setFechaAlta(Calendar.getInstance().getTime());
+        medicoActual.setUltimoAcceso(medicoActual.getFechaAlta());*/
+    }
+    
+    public void doEditar(Prescripcion prescripcion) {
+        prescripcionActual = prescripcion;   // Otra alternativa: volver a refrescarlos desde el DAO
+    }
+    
+    public void doGuardarNuevo() {  
+        prescripcionActual = prescripcionDAO.crear(prescripcionActual);
+        // Actualiza lista 
+        prescripciones = prescripcionDAO.buscarPorPaciente(citaControlador.getCitaActual().getPaciente().getId(),medicoControlador.getMedicoActual().getId());
+    }
+    
+    public void doGuardarEditado() {
+        //Comprobaciones
+        prescripcionActual = prescripcionDAO.actualizar(prescripcionActual);
+
+        // Actualiza lista a mostrar
+        prescripciones = prescripcionDAO.buscarPorPaciente(citaControlador.getCitaActual().getPaciente().getId(),medicoControlador.getMedicoActual().getId());        
+    }
+    
+    public String doVolver() {
+        return "../index?faces-redirect=true";
+    }
+    
+    public List<Medicamento> getMedicamentos() {
+        return medicamentoDAO.buscarTodos();
+    }
+  
 }
