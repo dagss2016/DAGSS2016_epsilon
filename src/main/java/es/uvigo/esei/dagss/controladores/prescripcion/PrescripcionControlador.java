@@ -14,9 +14,12 @@ import es.uvigo.esei.dagss.dominio.entidades.Prescripcion;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 
@@ -106,9 +109,16 @@ public class PrescripcionControlador implements Serializable {
     }
     
     public void doGuardarNuevo() {  
-        prescripcionActual = prescripcionDAO.crear(prescripcionActual);
-        // Actualiza lista 
-        prescripciones = prescripcionDAO.buscarPorPaciente(citaControlador.getCitaActual().getPaciente().getId(),medicoControlador.getMedicoActual().getId());
+        //Controlamos que la fecha fin no sea menor que fecha inicial
+        Date inicio = (Date)prescripcionActual.getFechaInicio();
+        Date fin = (Date)prescripcionActual.getFechaFin();
+        if (inicio.before(fin)){
+             prescripcionActual = prescripcionDAO.crear(prescripcionActual);
+             // Actualiza lista 
+             prescripciones = prescripcionDAO.buscarPorPaciente(citaControlador.getCitaActual().getPaciente().getId(),medicoControlador.getMedicoActual().getId());
+        } else {  
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fecha inicial no puede ser mayor que fecha fin, gañán", ""));
+        }
     }
     
     public void doGuardarEditado() {
