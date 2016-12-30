@@ -32,7 +32,7 @@
 
                     </p:panelGrid>
                     <br></br>
-                    <p:commandButton value="Guardar" actionListener="#{prescripcionControlador.doGuardarNuevo()}"  
+                    <p:commandButton value="Guardar" actionListener="#{tratamientoControlador.doGuardarNuevo()}"  
                                      update="display,:formularioListado:tablaListado,:mensajes" 
                                      oncomplete="PF('DialogoNuevo').hide()"/>
                     <p:commandButton value="Cancelar" onclick="PF('DialogoNuevo').hide()"/>
