@@ -37,9 +37,15 @@
                             <p:ajax event="rowSelect" update="botonNuevo botonVer botonEditar botonBorrar"/>
 
                             <f:facet name="header">
-                                <h:outputText value="Prescripciones para D/Dña #{citaControlador.citaActual.paciente.nombre} #{citaControlador.citaActual.paciente.apellidos}" style="font-size: 20px"/>
-                            </f:facet>                       
-                            
+                                <div align="left"><h:outputText value="Prescripciones para D/Dña #{citaControlador.citaActual.paciente.nombre} #{citaControlador.citaActual.paciente.apellidos}" style="font-size: 20px"/>   
+                                </div>
+                                <div align="right">
+                                    <p:commandButton id="botonFinalizar" icon="ui-icon-check"  value="Finalizar Cita" actionListener="#{citaControlador.doFinalizar()}" update=":mensajes" disabled="#{citaControlador.citaActual.estado ne 'PLANIFICADA'}"  onclick="return confirm('¿Finalizar Cita?')" action="/medico/privado/citas/listadoCitas"/>
+                                    <p:commandButton id="botonAusente" icon="ui-icon-clock"  value="Paciente Ausente" actionListener="#{citaControlador.doAusente()}" update=":mensajes" disabled="#{citaControlador.citaActual.estado ne 'PLANIFICADA'}"  onclick="return confirm('¿Finalizar Cita?')" action="/medico/privado/citas/listadoCitas"/>
+                                    <p:commandButton id="botonAnular" icon="ui-icon-close"  value="Anular Cita" actionListener="#{citaControlador.doAnular()}" update=":mensajes" disabled="#{citaControlador.citaActual.estado ne 'PLANIFICADA'}"  onclick="return confirm('¿Finalizar Cita?')" action="/medico/privado/citas/listadoCitas"/>
+                                </div>    
+                            </f:facet>
+                                
                             <p:column headerText="Medicamento">
                                 <p:outputLabel value="#{prescripcion.medicamento.nombre} "/>
                             </p:column>
@@ -64,7 +70,7 @@
                             </p:column>                         
                             <f:facet name="footer">
                                 <p:commandButton id="botonNuevo"  icon="ui-icon-plus"   value="Nueva"  actionListener="#{prescripcionControlador.doNuevo()}" update=":formularioNuevo" oncomplete="PF('DialogoNuevo').show()"/>
-                                <p:commandButton id="botonVer"    icon="ui-icon-search" value="Ver"    update=":formularioVer" oncomplete="PF('DialogoVer').show()" disabled="#{empty prescripcionControlador.prescripcionActual}"/>
+                                <p:commandButton id="botonVer"    icon="ui-icon-search" value="Ver Detalles"    update=":formularioVer" oncomplete="PF('DialogoVer').show()" disabled="#{empty prescripcionControlador.prescripcionActual}"/>
                                 <p:commandButton id="botonEditar" icon="ui-icon-pencil" value="Editar" update=":formularioEditar" oncomplete="PF('DialogoEditar').show()" disabled="#{empty prescripcionControlador.prescripcionActual}"/>
                                 <p:commandButton id="botonBorrar" icon="ui-icon-trash"  value="Borrar" actionListener="#{prescripcionControlador.doEliminar()}" update=":mensajes,tablaListado" disabled="#{empty prescripcionControlador.prescripcionActual}"  onclick="return confirm('¿Borrar Prescripción?')"/>
                             </f:facet>

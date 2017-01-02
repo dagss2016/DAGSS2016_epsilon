@@ -26,6 +26,7 @@ import javax.inject.Inject;
 public class RecetaControlador implements Serializable {
     
     List<Receta> recetas;
+    List<Receta> recetasPrescripcion;
     Receta recetaActual;
     
     @Inject
@@ -46,9 +47,9 @@ public class RecetaControlador implements Serializable {
         this.recetas = recetaDAO.buscarTodos();
     }
     
-    public void recetasPrescripcion() {
+    public void buscarPorPrescripcion() {
         
-        this.recetas = recetaDAO.buscarPorPrescripcion(prescripcionControlador.getPrescripcionActual().getId());
+        this.recetasPrescripcion = recetaDAO.buscarPorPrescripcion(prescripcionControlador.getPrescripcionActual().getId());
     }
     
     public List<Receta> getRecetas() {
@@ -75,10 +76,7 @@ public class RecetaControlador implements Serializable {
     
     public void doNuevo() {
         recetaActual = new Receta(); // Receta vacía
-        //recetaActual.setMedico(medicoControlador.getMedicoActual());
-        //recetaActual.setPaciente(citaControlador.getCitaActual().getPaciente());
-        /*medicoActual.setFechaAlta(Calendar.getInstance().getTime());
-        medicoActual.setUltimoAcceso(medicoActual.getFechaAlta());*/
+       
     }
     
     public void doEditar(Receta receta) {
@@ -102,4 +100,14 @@ public class RecetaControlador implements Serializable {
     public String doVolver() {
         return "../index?faces-redirect=true";
     }
+
+    public List<Receta> getRecetasPrescripcion() {
+        return recetasPrescripcion;
+    }
+
+    public void setRecetasPrescripcion(List<Receta> recetasPrescripcion) {
+        this.recetasPrescripcion = recetasPrescripcion;
+    }
+    
+    
 }

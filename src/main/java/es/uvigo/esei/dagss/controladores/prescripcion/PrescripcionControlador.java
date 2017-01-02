@@ -14,6 +14,7 @@ import es.uvigo.esei.dagss.dominio.entidades.Prescripcion;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -136,5 +137,25 @@ public class PrescripcionControlador implements Serializable {
     public List<Medicamento> getMedicamentos() {
         return medicamentoDAO.buscarTodos();
     }
+    
+    public char getMedicamentoGroup(Medicamento m) {
+        return m.getNombre().charAt(0);
+    }
+    
+    public List<Medicamento> completeMedicamento(String query) {
+        List<Medicamento> allMedicamentos = medicamentoDAO.buscarTodos();
+        List<Medicamento> filteredMedicamentos = new ArrayList<>();
+         
+        for (int i = 0; i < allMedicamentos.size(); i++) {
+            Medicamento m = allMedicamentos.get(i);
+            if (m.getNombre().toLowerCase().startsWith(query) | m.getFabricante().toLowerCase().startsWith(query) | m.getFamilia().toLowerCase().startsWith(query) | m.getPrincipioActivo().toLowerCase().startsWith(query)) 
+            {
+                filteredMedicamentos.add(m);
+            }
+        }
+         
+        return filteredMedicamentos;
+    }
+    
   
 }

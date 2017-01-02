@@ -34,7 +34,7 @@
                             </p:panelGrid>    
                         </div> <!-- izquierda -->
                         <div class="ui-g-6">
-                             <h1>Datos de la Prescripción</h1>
+                            <h1>Datos de la Prescripción</h1>
                             <br></br>   
                             <p:panelGrid columns="2" rendered="#{prescripcionControlador.prescripcionActual != null}">
 
@@ -53,12 +53,36 @@
                                 <h:outputText id="indicaciones" value="#{prescripcionControlador.prescripcionActual.indicaciones}"/>
 
                             </p:panelGrid>
-                        </div> <!-- contenido -->
+                        </div>    
+
                     </div>  <!-- cuerpo -->
+                    <div class="ui-g-12">
+                        <h1>Recetas Generadas</h1>
+                        <br></br> 
+
+                        <p:dataTable id="tablaListadoRecetas"
+                                     value="#{prescripcionControlador.prescripcionActual.recetas}"
+                                     var="receta" 
+                                     paginator="true" paginatorPosition="bottom" rows="10" rowKey="#{receta.id}">
+
+                            <p:column headerText="Inicio Validez">
+                                <p:outputLabel value="#{receta.inicioValidez}">
+                                    <f:convertDateTime dateStyle="short"/>
+                                </p:outputLabel>
+                            </p:column> 
+                            <p:column headerText="Fin Validez">
+                                <p:outputLabel value="#{receta.finValidez}">
+                                    <f:convertDateTime dateStyle="short"/>
+                                </p:outputLabel>
+                            </p:column>
+                            <p:column headerText="Estado">
+                                <p:outputLabel value="#{receta.estado} "/>
+                            </p:column>                         
+                        </p:dataTable>
+                        <p:commandButton value="Cerrar" onclick="PF('DialogoVer').hide()"/>
 
 
-
-                    <p:commandButton value="Cerrar" onclick="PF('DialogoVer').hide()"/>
+                    </div> <!-- contenido -->
                 </h:panelGroup>
             </h:form>
         </p:dialog>

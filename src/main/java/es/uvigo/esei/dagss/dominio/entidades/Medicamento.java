@@ -126,7 +126,5 @@ public class Medicamento implements Serializable {
     public String toString() {
         return "Medicamento{" + "id=" + id + ", nombre=" + nombre + '}';
     }
-
-
-    
+   
 }

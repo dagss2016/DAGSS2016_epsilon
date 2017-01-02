@@ -11,5 +11,9 @@ import javax.ejb.Stateless;
 @LocalBean
 public class MedicamentoDAO extends GenericoDAO<Medicamento> {
 
+    public Medicamento buscarByNombre(String nombre) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     // Completar aqui
 }

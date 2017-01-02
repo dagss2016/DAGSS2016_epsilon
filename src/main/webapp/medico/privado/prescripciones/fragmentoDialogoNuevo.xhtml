@@ -11,6 +11,8 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{prescripcionControlador.prescripcionActual != null}">
                         <p:outputLabel value="Medicamento:" for="medicamento"/>
+                       
+                        
                         <p:selectOneMenu id="medicamento" value="#{prescripcionControlador.prescripcionActual.medicamento}"
                                          converter="omnifaces.SelectItemsConverter">                
                             <f:selectItems var="itemMedicamento" value="#{prescripcionControlador.medicamentos}"                                           

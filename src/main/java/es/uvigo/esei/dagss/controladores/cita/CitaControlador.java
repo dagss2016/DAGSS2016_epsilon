@@ -82,6 +82,34 @@ public class CitaControlador implements Serializable {
     
     public void setCitas(List<Cita> citas) {
         this.citas = citas;
-    }    
+    }
+    
+    public void doGuardarEditado() {
+        
+        citaActual = citaDAO.actualizar(citaActual);
+        this.citas = citaDAO.buscarTodosByMedico(medicoControlador.getMedicoActual().getId());
+      }
+
+    public void doFinalizar() {
+  
+        citaActual.setEstado(EstadoCita.COMPLETADA);
+        doGuardarEditado();
+    }
+    
+    public void doAnular() {    
+        citaActual.setEstado(EstadoCita.ANULADA);
+        doGuardarEditado();
+    }
+    
+    public void doAusente() {    
+        citaActual.setEstado(EstadoCita.AUSENTE);
+        doGuardarEditado();
+    }
+    
+ 
+    
+    
+    
+    
     
 }

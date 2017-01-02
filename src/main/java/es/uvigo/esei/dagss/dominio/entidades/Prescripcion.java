@@ -49,12 +49,14 @@ public class Prescripcion implements Serializable {
     Date fechaFin;
 
     @OneToMany(mappedBy = "prescripcion", cascade = CascadeType.ALL)
-    List<Receta> recetas = new ArrayList<Receta>();
+    List<Receta> recetas;
 
     public Prescripcion() {
+        this.recetas = new ArrayList<>();
     }
 
     public Prescripcion(Paciente paciente, Medicamento medicamento, Medico medico, Integer dosis, String indicaciones, Date fechaInicio, Date fechaFin) {
+        this.recetas = new ArrayList<>();
         this.paciente = paciente;
         this.medicamento = medicamento;
         this.medico = medico;
@@ -62,7 +64,7 @@ public class Prescripcion implements Serializable {
         this.indicaciones = indicaciones;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-        this.recetas = new ArrayList<>();
+  
     }
 
     public Long getId() {

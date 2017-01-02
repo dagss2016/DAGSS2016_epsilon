@@ -12,11 +12,13 @@ import es.uvigo.esei.dagss.dominio.daos.PrescripcionDAO;
 import es.uvigo.esei.dagss.dominio.daos.RecetaDAO;
 import es.uvigo.esei.dagss.dominio.entidades.EstadoReceta;
 import es.uvigo.esei.dagss.dominio.entidades.Prescripcion;
+import es.uvigo.esei.dagss.dominio.entidades.Receta;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
@@ -52,33 +54,37 @@ public class TratamientoControlador implements Serializable {
     }
    
     public void doGuardarNuevo() {
-        
-     
         Prescripcion prescripcionActual = prescripcionControlador.getPrescripcionActual();
-        prescripcionControlador.doGuardarNuevo();
-        //Calculamos numero de botes de medicamento necesarios
-        //Calendar calendario = Calendar.getInstance();
-        //Date inicio = (Date)prescripcionActual.getFechaInicio();
-        //Date fin = (Date)prescripcionActual.getFechaFin();
-        //calendario.setTime(inicio);
-        //int numDias = 0;
-        //while(!calendario.getTime().after(fin)) {
-          //  numDias++;
-        //}
-        //int dosisTotales = numDias * prescripcionActual.getDosis();
-        //int numBotes = (int)Math.round(dosisTotales / prescripcionActual.getMedicamento().getNumeroDosis());
-        //for (int i=1;i==numBotes; i++) {*/
-            recetaControlador.doNuevo();
-            recetaControlador.getRecetaActual().setPrescripcion(prescripcionControlador.getPrescripcionActual());
-            recetaControlador.getRecetaActual().setCantidad(1);
-            recetaControlador.getRecetaActual().setEstado(EstadoReceta.GENERADA);
-            recetaControlador.getRecetaActual().setInicioValidez(prescripcionActual.getFechaInicio());
-            recetaControlador.getRecetaActual().setFinValidez(prescripcionActual.getFechaFin());
-            recetaControlador.doGuardarNuevo();  
-        //}
-        
+        //Calculamos numero de dias
+        Date inicio = (Date)prescripcionActual.getFechaInicio();
+        Date fin = (Date)prescripcionActual.getFechaFin();
+        int numDias = calculaDias(inicio,fin);
+        //Calculamos numero de botes necesarios
       
-        
+        int dosisTotales = numDias * prescripcionActual.getDosis();
+        int numBotes = (int)Math.round(dosisTotales / prescripcionActual.getMedicamento().getNumeroDosis());
+        for (int i=1;i<=numBotes; i++) {
+            Receta receta = new Receta();
+            receta.setPrescripcion(prescripcionActual);
+            receta.setCantidad(1);
+            receta.setEstado(EstadoReceta.GENERADA);
+            receta.setInicioValidez(prescripcionActual.getFechaInicio());
+            receta.setFinValidez(prescripcionActual.getFechaFin());
+            prescripcionControlador.getPrescripcionActual().anadirReceta(receta);
+        }        
+        prescripcionControlador.doGuardarNuevo();
+    }
+    
+    //Cuenta dias entre dos fechas.
+    public int calculaDias(Date inicio,Date fin) {    
+        Calendar calendario = Calendar.getInstance();
+        calendario.setTime(inicio);
+        int dias = 1; //Se inicializa a 1 para que cuente el dia actual
+        while(!calendario.getTime().after(fin)) {
+            calendario.add(Calendar.DAY_OF_MONTH, 1); 
+            dias++;
+        }      
+        return dias;        
     }
     
 }

@@ -60,7 +60,7 @@
 
                             <f:facet name="footer">
                                 <p:commandButton id="botonVer"    icon="ui-icon-search" value="Ver Datos Paciente"    update=":formularioVer" oncomplete="PF('DialogoVer').show()" disabled="#{empty citaControlador.citaActual}"/>
-                                <p:button id="botonAtender" icon="ui-icon-check"  value="Atender" outcome="/medico/privado/prescripciones/listadoPrescripciones" disabled="#{empty citaControlador.citaActual}"/>
+                                <p:button id="botonAtender" icon="ui-icon-check"  value="Atender" outcome="/medico/privado/prescripciones/listadoPrescripciones" disabled="#{citaControlador.citaActual.estado ne 'PLANIFICADA'}"/>
                             <!-- TODO: Que controle que el boton atender solo esté activo para citas pendientes -->
                             <!-- cita.estado.equals("PENDIENTE")} -->
                             </f:facet>
