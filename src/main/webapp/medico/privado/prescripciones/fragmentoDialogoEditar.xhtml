@@ -31,9 +31,10 @@
                         <p:outputLabel value="Fecha Fin:" for="fechaFin"/>
                         <p:calendar id="fechaFin" value="#{prescripcionControlador.prescripcionActual.fechaFin}" required="true"/>
                         
+                        </p:panelGrid>
+                    <p:panelGrid columns="1" rendered="#{prescripcionControlador.prescripcionActual != null}">
                         <p:outputLabel value="Indicaciones:" for="indicaciones"/>
-                        <p:inputText id="indicaciones" value="#{prescripcionControlador.prescripcionActual.indicaciones}" required="true"/>
-
+                        <p:editor id="indicaciones" widgetVar="editorWidget" value="#{prescripcionControlador.prescripcionActual.indicaciones}" width="298" required="true" />
                     </p:panelGrid>
 
                     <p:commandButton value="Guardar" actionListener="#{prescripcionControlador.doGuardarEditado()}"  

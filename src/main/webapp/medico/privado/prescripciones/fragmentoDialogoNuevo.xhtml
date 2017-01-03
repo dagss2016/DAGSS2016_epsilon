@@ -11,28 +11,25 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{prescripcionControlador.prescripcionActual != null}">
                         <p:outputLabel value="Medicamento:" for="medicamento"/>
-                       
-                        
+                                            
                         <p:selectOneMenu id="medicamento" value="#{prescripcionControlador.prescripcionActual.medicamento}"
                                          converter="omnifaces.SelectItemsConverter">                
                             <f:selectItems var="itemMedicamento" value="#{prescripcionControlador.medicamentos}"                                           
                                            itemValue="#{itemMedicamento}" 
                                            itemLabel="#{itemMedicamento.nombre} (#{itemMedicamento.fabricante})" />
-                        </p:selectOneMenu> 
-                                                
+                        </p:selectOneMenu>                                                
                         <p:outputLabel value="Dosis:" for="dosis"/>
                         <p:inputText id="dosis" value="#{prescripcionControlador.prescripcionActual.dosis}" required="true"/>
-
                         <p:outputLabel value="Fecha Inicio:" for="fechaInicio"/>
-                        <p:calendar id="fechaInicio" value="#{prescripcionControlador.prescripcionActual.fechaInicio}" required="true"/>
-                        
+                        <p:calendar id="fechaInicio" value="#{prescripcionControlador.prescripcionActual.fechaInicio}" mindate="#{now}" pages="2" required="true"/>
                         <p:outputLabel value="Fecha Fin:" for="fechaFin"/>
-                        <p:calendar id="fechaFin" value="#{prescripcionControlador.prescripcionActual.fechaFin}" required="true"/>
-                        
-                        <p:outputLabel value="Indicaciones:" for="indicaciones"/>
-                        <p:inputText id="indicaciones" value="#{prescripcionControlador.prescripcionActual.indicaciones}" required="true"/>
-
+                        <p:calendar id="fechaFin" value="#{prescripcionControlador.prescripcionActual.fechaFin}" mindate="#{now}" pages="2" required="true"/>       
                     </p:panelGrid>
+                    <p:panelGrid columns="1" rendered="#{prescripcionControlador.prescripcionActual != null}">
+                        <p:outputLabel value="Indicaciones:" for="indicaciones"/>
+                        <p:editor id="indicaciones" widgetVar="editorWidget" value="#{prescripcionControlador.prescripcionActual.indicaciones}" width="298" required="true"/>
+                    </p:panelGrid>
+ 
                     <br></br>
                     <p:commandButton value="Guardar" actionListener="#{tratamientoControlador.doGuardarNuevo()}"  
                                      update="display,:formularioListado:tablaListado,:mensajes" 

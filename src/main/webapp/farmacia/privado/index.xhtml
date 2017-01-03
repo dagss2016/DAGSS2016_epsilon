@@ -3,39 +3,66 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
+      <f:metadata>
+          <f:event type="preRenderView" listener="#{recetaControlador.recetasValidas()}"/>
+      </f:metadata>
+    
     <body>
 
         <ui:composition template="/plantillas/plantillaComun.xhtml">
 
             <ui:define name="tituloPagina">
-                Página principal de Farmacias
+                Gestión de Recetas
             </ui:define>            
 
             <ui:define name="izquierda">
-                <ui:include src="/plantillas/menuComun.xhtml"/>
+                <ui:include src="/farmacia/plantillas/menuFarmacia.xhtml"/>
             </ui:define>
 
             <ui:define name="contenido">
-                <h:form>
-                    <h:panelGrid>
-                        <h:inputText id="tarjeta_sanitaria" value="#{prescripcionControlador.numeroTarjetaSanitaria}" title="Tarjeta Sanitaria" required="true" requiredMessage="Debe introducirse una tarjeta sanitaria" />
-                        <h:commandButton value="buscar" action="#{prescripcionControlador.doBuscarPacientePorTarjetaSanitaria()}"/>
-                    </h:panelGrid>
-                    
-                    <h:panelGrid>
-                        <ui:repeat value="#{prescripcionControlador.prescripciones}"
-                         var="prescripcion">
-                            <h:outputText value="#{prescripcion.medico.nombre}"/>
-                            <h:outputText value="#{prescripcion.medicamento.nombre}"/>
-                        </ui:repeat>
-                    </h:panelGrid>
-                </h:form>
+                
+                <p:growl id="mensajes" life="3000" />
+
+                <h:form id="formularioListado">     
+                        <p:dataTable id="tablaListado"
+                                     value="#{recetaControlador.recetas}"
+                                     var="receta" 
+                                     selection="#{recetaControlador.recetaActual}"
+                                     selectionMode="single" 
+                                     paginator="true" paginatorPosition="bottom" rows="10" rowKey="#{receta.id}">
+                            <p:ajax event="rowSelect" update="botonSuministrar botonVerFechasValidez"/>
+                            <f:facet name="header">
+                                <h:outputText value="Recetas Válidas Actualmente" style="font-size: 20px"/>   
+                            </f:facet>                                
+                            <p:column headerText="Prescripcion">
+                                 <p:outputLabel value="#{receta.prescripcion.id}"/>
+                            </p:column>
+                            <p:column headerText="Nº Tarjeta Sanitaria">
+                                 <p:outputLabel value="#{receta.prescripcion.paciente.numeroTarjetaSanitaria}"/>
+                            </p:column>
+                            <p:column headerText="Paciente">
+                                <p:outputLabel value="#{receta.prescripcion.paciente.nombre} #{receta.prescripcion.paciente.apellidos}"/>
+                            </p:column>
+                            <p:column headerText="Medico">
+                                <p:outputLabel value="#{receta.prescripcion.medico.nombre} #{receta.prescripcion.medico.apellidos}"/>
+                            </p:column> 
+                            <p:column headerText="Estado">
+                                <p:outputLabel value="#{receta.estadoReceta}"/>
+                            </p:column>
+                                                  
+                                              
+                            <f:facet name="footer">
+                                <p:commandButton id="botonSuministrar"  icon="ui-icon-plus"   value="Suministrar"  actionListener="#{farmaciaControlador.doSuministrar()}" update=":formularioListado" disabled="#{recetaControlador.recetaActual.estadoReceta eq 'SERVIDA'}" />
+                                <p:commandButton id="botonVerFechasValidez" icon="ui-icon-calendar" value="Ver Fechas Validez"  update=":formularioVerFechas" oncomplete="PF('DialogoVerFechas').show()"/>
+                            </f:facet>
+                        </p:dataTable>
+                </h:form>   
+                <ui:include src="recetas/fragmentoDialogoVerFechas.xhtml"/>
             </ui:define>
-
         </ui:composition>
-
     </body>
 </html>
+

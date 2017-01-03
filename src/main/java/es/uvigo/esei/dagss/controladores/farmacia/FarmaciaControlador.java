@@ -4,7 +4,9 @@
 package es.uvigo.esei.dagss.controladores.farmacia;
 
 import es.uvigo.esei.dagss.controladores.autenticacion.AutenticacionControlador;
+import es.uvigo.esei.dagss.controladores.receta.RecetaControlador;
 import es.uvigo.esei.dagss.dominio.daos.FarmaciaDAO;
+import es.uvigo.esei.dagss.dominio.entidades.EstadoReceta;
 import es.uvigo.esei.dagss.dominio.entidades.Farmacia;
 import es.uvigo.esei.dagss.dominio.entidades.TipoUsuario;
 import javax.inject.Named;
@@ -29,6 +31,9 @@ public class FarmaciaControlador implements Serializable {
 
     @Inject
     private AutenticacionControlador autenticacionControlador;
+    
+    @Inject
+    private RecetaControlador recetaControlador;
 
     @EJB
     private FarmaciaDAO farmaciaDAO;
@@ -87,5 +92,12 @@ public class FarmaciaControlador implements Serializable {
             }
         }
         return destino;
+    }
+    
+    public void doSuministrar(){
+        
+        recetaControlador.getRecetaActual().setFarmaciaDispensadora(farmaciaActual);
+        recetaControlador.getRecetaActual().setEstadoReceta(EstadoReceta.SERVIDA);
+        recetaControlador.doGuardarEditado();
     }
 }

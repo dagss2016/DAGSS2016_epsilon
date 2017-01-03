@@ -47,6 +47,11 @@ public class RecetaControlador implements Serializable {
         this.recetas = recetaDAO.buscarTodos();
     }
     
+    public void recetasValidas() {
+        
+        this.recetas = recetaDAO.recetasValidas();
+    }
+    
     public void buscarPorPrescripcion() {
         
         this.recetasPrescripcion = recetaDAO.buscarPorPrescripcion(prescripcionControlador.getPrescripcionActual().getId());
