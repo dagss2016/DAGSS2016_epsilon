@@ -58,8 +58,8 @@
                             <p:outputLabel value="#{receta.estadoReceta}"/>
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="botonSuministrar"  icon="ui-icon-plus"   value="Suministrar"  actionListener="#{farmaciaControlador.doSuministrar()}" update=":formularioListado,tablaListado" disabled="#{empty recetaControlador.recetaActual or recetaControlador.recetaActual.estadoReceta ne 'GENERADA'}" />
-                            <p:commandButton id="botonAnular"  icon="ui-icon-close"   value="Anular"  actionListener="#{farmaciaControlador.doAnular()}" update=":formularioListado,tablaListado" disabled="#{empty recetaControlador.recetaActual or recetaControlador.recetaActual.estadoReceta ne 'GENERADA'}" />
+                            <p:commandButton id="botonSuministrar"  icon="ui-icon-plus"   value="Suministrar"  actionListener="#{farmaciaControlador.doSuministrar()}" update=":formularioListado,tablaListado" disabled="#{empty recetaControlador.recetaActual or recetaControlador.recetaActual.estadoReceta ne 'GENERADA'}" onclick="return confirm('¿Estás seguro/a?')"/>
+                            <p:commandButton id="botonAnular"  icon="ui-icon-close"   value="Anular"  actionListener="#{farmaciaControlador.doAnular()}" update=":formularioListado,tablaListado" disabled="#{empty recetaControlador.recetaActual or recetaControlador.recetaActual.estadoReceta ne 'GENERADA'}" onclick="return confirm('¿Estás seguro/a?')"/>
                             <p:commandButton id="botonVerFechasValidez" icon="ui-icon-calendar" value="Ver Fechas Validez"  update=":formularioVerFechas" oncomplete="PF('DialogoVerFechas').show()" disabled="#{empty recetaControlador.recetaActual}"/>
                             <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="ui-icon-calculator" />
                             <p:columnToggler datasource="tablaListado" trigger="toggler" />

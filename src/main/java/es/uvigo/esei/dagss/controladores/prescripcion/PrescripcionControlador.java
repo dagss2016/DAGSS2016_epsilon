@@ -118,7 +118,7 @@ public class PrescripcionControlador implements Serializable {
              // Actualiza lista 
              prescripciones = prescripcionDAO.buscarPorPaciente(citaControlador.getCitaActual().getPaciente().getId(),medicoControlador.getMedicoActual().getId());
         } else {  
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fecha inicial no puede ser mayor que fecha fin, gañán", ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fecha inicial no puede ser mayor que fecha fin", ""));
         }
     }
     
