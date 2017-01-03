@@ -32,7 +32,9 @@
                                      var="cita" 
                                      selection="#{citaControlador.citaActual}"
                                      selectionMode="single" 
-                                     paginator="true" paginatorPosition="bottom" rows="10" rowKey="#{cita.id}">
+                                     paginator="true" paginatorPosition="bottom" rows="10" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                    rowsPerPageTemplate="5,10,15" rowKey="#{cita.id}"
+                                    emptyMessage="No hay Citas para hoy">
 
                             <p:ajax event="rowSelect"   update="botonVer botonAtender"/>
 
@@ -41,13 +43,13 @@
     
                            </f:facet>                        
 
-                            <p:column headerText="Hora">
+                            <p:column sortBy="#{cita.hora}" headerText="Hora">
                                 <p:outputLabel value="#{cita.hora}">
                                     <f:convertDateTime pattern="hh:mm"/>
                                 </p:outputLabel>
                             </p:column>
                             
-                            <p:column headerText="Paciente">
+                            <p:column sortBy="#{cita.paciente.nombre}" filterBy="#{cita.paciente.nombre},#{cita.paciente.apellidos}" headerText="Paciente" filterMatchMode="contains">
                                 <p:outputLabel value="#{cita.paciente.apellidos}, #{cita.paciente.nombre}" />
                             </p:column>                                    
                             
@@ -55,15 +57,15 @@
                                 <p:outputLabel value="#{cita.duracion} "/>
                             </p:column>
 
-                            <p:column headerText="Estado">
+                            <p:column sortBy="#{cita.estado}" filterBy="#{cita.estado}" headerText="Estado" filterMatchMode="contains">
                                 <p:outputLabel value="#{cita.estado} "/>
                             </p:column>
 
                             <f:facet name="footer">
                                 <p:commandButton id="botonVer"    icon="ui-icon-search" value="Ver Datos Paciente"    update=":formularioVer" oncomplete="PF('DialogoVer').show()" disabled="#{empty citaControlador.citaActual}"/>
-                                <p:button id="botonAtender" icon="ui-icon-check"  value="Atender" outcome="/medico/privado/prescripciones/listadoPrescripciones" disabled="#{citaControlador.citaActual.estado ne 'PLANIFICADA'}"/>
-                            <!-- TODO: Que controle que el boton atender solo esté activo para citas pendientes -->
-                            <!-- cita.estado.equals("PENDIENTE")} -->
+                                <p:button id="botonAtender" icon="ui-icon-check"  value="Atender" outcome="/medico/privado/prescripciones/listadoPrescripciones" disabled="#{empty citaControlador.citaActual or citaControlador.citaActual.estado ne 'PLANIFICADA'}"/>
+                                <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="ui-icon-calculator" />
+                                <p:columnToggler datasource="tablaListado" trigger="toggler" />
                             </f:facet>
                         </p:dataTable>
                 </h:form>         

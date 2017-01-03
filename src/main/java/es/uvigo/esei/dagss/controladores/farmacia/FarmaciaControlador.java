@@ -94,10 +94,14 @@ public class FarmaciaControlador implements Serializable {
         return destino;
     }
     
-    public void doSuministrar(){
-        
+    public void doSuministrar(){        
         recetaControlador.getRecetaActual().setFarmaciaDispensadora(farmaciaActual);
         recetaControlador.getRecetaActual().setEstadoReceta(EstadoReceta.SERVIDA);
+        recetaControlador.doGuardarEditado();
+    }
+    
+    public void doAnular(){        
+        recetaControlador.getRecetaActual().setEstadoReceta(EstadoReceta.ANULADA);
         recetaControlador.doGuardarEditado();
     }
 }

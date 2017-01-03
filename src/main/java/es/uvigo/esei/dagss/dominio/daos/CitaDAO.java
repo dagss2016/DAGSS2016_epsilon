@@ -42,7 +42,7 @@ public class CitaDAO  extends GenericoDAO<Cita>{
     
     public List<Cita> buscarTodosByMedico(Long medico_Id) {
         TypedQuery<Cita> q = em.createQuery("SELECT m FROM Cita AS m "
-                + "  WHERE m.medico.id = :medico_Id AND m.fecha = :hoy" + " ORDER BY m.hora DESC", Cita.class);
+                + "  WHERE m.medico.id = :medico_Id AND m.fecha = :hoy" + " ORDER BY m.hora", Cita.class);
         q.setParameter("medico_Id",medico_Id);
         q.setParameter("hoy",Calendar.getInstance().getTime());        
         return q.getResultList();    

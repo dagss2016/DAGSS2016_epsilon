@@ -63,7 +63,8 @@
                         <p:dataTable id="tablaListadoRecetas"
                                      value="#{prescripcionControlador.prescripcionActual.recetas}"
                                      var="receta" 
-                                     paginator="true" paginatorPosition="bottom" rows="10" rowKey="#{receta.id}">
+                                     paginator="true" paginatorPosition="bottom" rows="10" rowKey="#{receta.id}"
+                                     emptyMessage="No hay Recetas actualmente">>
 
                             <p:column headerText="Inicio Validez">
                                 <p:outputLabel value="#{receta.inicioValidez}">

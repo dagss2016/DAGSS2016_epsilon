@@ -6,10 +6,10 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-      <f:metadata>
-          <f:event type="preRenderView" listener="#{recetaControlador.recetasValidas()}"/>
-      </f:metadata>
-    
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{recetaControlador.recetasValidas()}"/>
+    </f:metadata>
+
     <body>
 
         <ui:composition template="/plantillas/plantillaComun.xhtml">
@@ -23,42 +23,48 @@
             </ui:define>
 
             <ui:define name="contenido">
-                
+
                 <p:growl id="mensajes" life="3000" />
 
                 <h:form id="formularioListado">     
-                        <p:dataTable id="tablaListado"
-                                     value="#{recetaControlador.recetas}"
-                                     var="receta" 
-                                     selection="#{recetaControlador.recetaActual}"
-                                     selectionMode="single" 
-                                     paginator="true" paginatorPosition="bottom" rows="10" rowKey="#{receta.id}">
-                            <p:ajax event="rowSelect" update="botonSuministrar botonVerFechasValidez"/>
-                            <f:facet name="header">
-                                <h:outputText value="Recetas Válidas Actualmente" style="font-size: 20px"/>   
-                            </f:facet>                                
-                            <p:column headerText="Prescripcion">
-                                 <p:outputLabel value="#{receta.prescripcion.id}"/>
-                            </p:column>
-                            <p:column headerText="Nº Tarjeta Sanitaria">
-                                 <p:outputLabel value="#{receta.prescripcion.paciente.numeroTarjetaSanitaria}"/>
-                            </p:column>
-                            <p:column headerText="Paciente">
-                                <p:outputLabel value="#{receta.prescripcion.paciente.nombre} #{receta.prescripcion.paciente.apellidos}"/>
-                            </p:column>
-                            <p:column headerText="Medico">
-                                <p:outputLabel value="#{receta.prescripcion.medico.nombre} #{receta.prescripcion.medico.apellidos}"/>
-                            </p:column> 
-                            <p:column headerText="Estado">
-                                <p:outputLabel value="#{receta.estadoReceta}"/>
-                            </p:column>
-                                                  
-                                              
-                            <f:facet name="footer">
-                                <p:commandButton id="botonSuministrar"  icon="ui-icon-plus"   value="Suministrar"  actionListener="#{farmaciaControlador.doSuministrar()}" update=":formularioListado" disabled="#{recetaControlador.recetaActual.estadoReceta eq 'SERVIDA'}" />
-                                <p:commandButton id="botonVerFechasValidez" icon="ui-icon-calendar" value="Ver Fechas Validez"  update=":formularioVerFechas" oncomplete="PF('DialogoVerFechas').show()"/>
-                            </f:facet>
-                        </p:dataTable>
+                    <p:dataTable id="tablaListado"
+                                 value="#{recetaControlador.recetas}"
+                                 var="receta" 
+                                 selection="#{recetaControlador.recetaActual}"
+                                 selectionMode="single" 
+                                 paginator="true" paginatorPosition="bottom" rows="10" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15" rowKey="#{receta.id}"
+                                 emptyMessage="No se han encontrado datos con esos criterios">
+                        <p:ajax event="rowSelect" update="botonSuministrar botonAnular botonVerFechasValidez"/>
+                        <f:facet name="header">
+                            Recetas Válidas Actualmente
+                        </f:facet>                                
+                        <p:column headerText="Prescripción" sortBy="#{receta.prescripcion.id}">
+                            <p:outputLabel value="#{receta.prescripcion.id}"/>
+                        </p:column>
+                        <p:column filterBy="#{receta.prescripcion.medicamento.nombre}" headerText="Medicamento" sortBy="#{receta.prescripcion.medicamento.nombre}" filterMatchMode="contains">
+                            <p:outputLabel value="#{receta.prescripcion.medicamento.nombre}"/>
+                        </p:column>
+                        <p:column filterBy="#{receta.prescripcion.paciente.numeroTarjetaSanitaria}" headerText="Nº Tarjeta Sanitaria" sortBy="#{receta.prescripcion.paciente.numeroTarjetaSanitaria}" filterMatchMode="contains">
+                            <p:outputLabel value="#{receta.prescripcion.paciente.numeroTarjetaSanitaria}"/>
+                        </p:column>
+                        <p:column filterBy="#{receta.prescripcion.paciente.nombre},#{receta.prescripcion.paciente.apellidos}" headerText="Paciente" sortBy="#{receta.prescripcion.paciente.nombre}" filterMatchMode="contains">
+                            <p:outputLabel value="#{receta.prescripcion.paciente.nombre} #{receta.prescripcion.paciente.apellidos}"/>
+                        </p:column>
+                        <p:column filterBy="#{receta.prescripcion.medico.nombre},#{receta.prescripcion.medico.apellidos}" headerText="Médico" sortBy="#{receta.prescripcion.medico.nombre}" filterMatchMode="contains">
+                            <p:outputLabel value="#{receta.prescripcion.medico.nombre} #{receta.prescripcion.medico.apellidos}"/>
+                        </p:column> 
+                        <p:column filterBy="#{receta.estadoReceta}" headerText="Estado" sortBy="#{receta.estadoReceta}" filterMatchMode="contains">
+                            <p:outputLabel value="#{receta.estadoReceta}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="botonSuministrar"  icon="ui-icon-plus"   value="Suministrar"  actionListener="#{farmaciaControlador.doSuministrar()}" update=":formularioListado,tablaListado" disabled="#{empty recetaControlador.recetaActual or recetaControlador.recetaActual.estadoReceta ne 'GENERADA'}" />
+                            <p:commandButton id="botonAnular"  icon="ui-icon-close"   value="Anular"  actionListener="#{farmaciaControlador.doAnular()}" update=":formularioListado,tablaListado" disabled="#{empty recetaControlador.recetaActual or recetaControlador.recetaActual.estadoReceta ne 'GENERADA'}" />
+                            <p:commandButton id="botonVerFechasValidez" icon="ui-icon-calendar" value="Ver Fechas Validez"  update=":formularioVerFechas" oncomplete="PF('DialogoVerFechas').show()" disabled="#{empty recetaControlador.recetaActual}"/>
+                            <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="ui-icon-calculator" />
+                            <p:columnToggler datasource="tablaListado" trigger="toggler" />
+                        </f:facet>
+                    </p:dataTable>
                 </h:form>   
                 <ui:include src="recetas/fragmentoDialogoVerFechas.xhtml"/>
             </ui:define>

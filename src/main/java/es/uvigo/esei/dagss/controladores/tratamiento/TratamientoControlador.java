@@ -8,8 +8,6 @@ package es.uvigo.esei.dagss.controladores.tratamiento;
 import es.uvigo.esei.dagss.controladores.receta.*;
 import es.uvigo.esei.dagss.controladores.prescripcion.PrescripcionControlador;
 import es.uvigo.esei.dagss.dominio.daos.MedicamentoDAO;
-import es.uvigo.esei.dagss.dominio.daos.PrescripcionDAO;
-import es.uvigo.esei.dagss.dominio.daos.RecetaDAO;
 import es.uvigo.esei.dagss.dominio.entidades.EstadoReceta;
 import es.uvigo.esei.dagss.dominio.entidades.Prescripcion;
 import es.uvigo.esei.dagss.dominio.entidades.Receta;
@@ -18,7 +16,6 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
@@ -62,8 +59,8 @@ public class TratamientoControlador implements Serializable {
         //Calculamos numero de botes necesarios
       
         int dosisTotales = numDias * prescripcionActual.getDosis();
-        int numBotes = (int)Math.round(dosisTotales / prescripcionActual.getMedicamento().getNumeroDosis());
-        for (int i=1;i<=numBotes; i++) {
+        int numBotes = (int)Math.ceil(dosisTotales / (double)prescripcionActual.getMedicamento().getNumeroDosis());
+        for (int i=0;i<numBotes; i++) {
             Receta receta = new Receta();
             receta.setPrescripcion(prescripcionActual);
             receta.setCantidad(1);
