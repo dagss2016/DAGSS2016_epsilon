@@ -14,24 +14,21 @@ import org.jasypt.util.password.BasicPasswordEncryptor;
 @LocalBean
 public class UsuarioDAO extends GenericoDAO<Usuario> {
 
-
     // Métodos adicionales para control de usuarios
     public boolean autenticarUsuario(Long idUsuario, String passwordPlano, String tipo) {
         Usuario usuario;
         boolean resultado = false;
-        
+
         usuario = buscarPorId(idUsuario);
-                
+
         if (usuario != null) {
             if (comprobarTipo(usuario, tipo)) {
                 if (usuario.getPassword().equals("")) {
                     resultado = true;
                 } else if (passwordPlano.equals("") && !usuario.getPassword().equals("")) {
                     resultado = false;
-                } else {
-                    if (comprobarPassword(passwordPlano, usuario.getPassword())) {
-                        resultado = true;
-                    }
+                } else if (comprobarPassword(passwordPlano, usuario.getPassword())) {
+                    resultado = true;
                 }
             }
         }
@@ -65,8 +62,8 @@ public class UsuarioDAO extends GenericoDAO<Usuario> {
 
     private boolean comprobarTipo(Usuario usuario, TipoUsuario tipo) {
         return usuario.getTipoUsuario().equals(tipo);
-    }    
-    
+    }
+
     private boolean comprobarPassword(String passwordPlano, String passwordEncriptado) {
         BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
 

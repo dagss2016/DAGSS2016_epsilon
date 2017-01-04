@@ -9,29 +9,18 @@
     <f:metadata>
         <f:event type="preRenderView" listener="#{citaControlador.citasHoy()}"/>
     </f:metadata>
-
     <body>
-
         <ui:composition template="/plantillas/plantillaComun.xhtml">
-
             <ui:define name="tituloPagina">
                 Pagina principal de Médicos
             </ui:define>            
-
             <ui:define name="izquierda">
                 <ui:include src="/medico/plantillas/menuMedico.xhtml"/>
             </ui:define>
-
             <ui:define name="contenido">
-
                 <p:growl id="mensajes" life="3000" />
-
                 <h1>[#{medicoControlador.medicoActual.centroSalud.nombre}]</h1>
-
-                <h2>Bienvenido #{medicoControlador.medicoActual.nombre} #{medicoControlador.medicoActual.apellidos} </h2>
-                <ul>
-                    <li>Hoy Tienes #{citaControlador.citas.size()} Citas</li>
-                </ul>
+                <h2>Bienvenido #{medicoControlador.medicoActual.nombre} #{medicoControlador.medicoActual.apellidos} </h2>               
             </ui:define>
         </ui:composition>
     </body>

@@ -10,16 +10,11 @@ import es.uvigo.esei.dagss.dominio.entidades.TipoUsuario;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
-/**
- *
- * @author ribadas
- */
 @Named(value = "pacienteControlador")
 @SessionScoped
 public class PacienteControlador implements Serializable {
@@ -85,7 +80,7 @@ public class PacienteControlador implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
     private boolean parametrosAccesoInvalidos() {
         return (((dni == null) && (numeroSeguridadSocial == null) && (numeroTarjetaSanitaria == null))
                 || (password == null));
@@ -113,23 +108,21 @@ public class PacienteControlador implements Serializable {
             Paciente paciente = recuperarDatosPaciente();
             if (paciente == null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "No existe ningún paciente con los datos indicados", ""));
+            } else if (autenticacionControlador.autenticarUsuario(
+                    paciente.getId(),
+                    password,
+                    TipoUsuario.PACIENTE.getEtiqueta().toLowerCase())) {
+
+                pacienteActual = paciente;
+
+                // TODO:  revisar acceso sin password en primer uso
+                //                    if (paciente.getPassword().equals("")) {
+                //                        destino = "privado/cambiarPassword";
+                //                    } else {
+                destino = "privado/index";
+                //                    }
             } else {
-                if (autenticacionControlador.autenticarUsuario(
-                        paciente.getId(),
-                        password,
-                        TipoUsuario.PACIENTE.getEtiqueta().toLowerCase())) {
-
-                    pacienteActual = paciente;
-
-// TODO:  revisar acceso sin password en primer uso
-//                    if (paciente.getPassword().equals("")) {
-//                        destino = "privado/cambiarPassword";
-//                    } else {
-                        destino = "privado/index";
-//                    }
-                } else {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Credenciales de acceso incorrectas", ""));
-                }
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Credenciales de acceso incorrectas", ""));
             }
         }
         return destino;

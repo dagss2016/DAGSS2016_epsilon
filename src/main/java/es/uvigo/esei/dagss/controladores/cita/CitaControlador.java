@@ -19,32 +19,24 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Inject;
 
-
-/**
- *
- * @author rbr
- */
 @Named(value = "citaControlador")
 @SessionScoped
 public class CitaControlador implements Serializable {
- 
+
     static final public Integer DURACION_CITA_POR_DEFECTO = 15; // Citas de 15 minutos
-
-    //@Inject
-    //CitaDAO citaDAO;
-
-    @Inject
-    MedicoDAO medicoDAO;
-    
-    @Inject
-    PacienteDAO pacienteDAO;
 
     List<Cita> citas;
     Cita citaActual;
 
     @Inject
+    MedicoDAO medicoDAO;
+
+    @Inject
+    PacienteDAO pacienteDAO;
+
+    @Inject
     private MedicoControlador medicoControlador;
-  
+
     @EJB
     private CitaDAO citaDAO;
 
@@ -53,21 +45,19 @@ public class CitaControlador implements Serializable {
      */
     public CitaControlador() {
     }
-    
+
     @PostConstruct
     public void inicializar() {
     }
-    
-    public void citasHoy(){
-        
+
+    public void citasHoy() {
         this.citas = citaDAO.buscarTodosByMedico(medicoControlador.getMedicoActual().getId());
-        
     }
-    
-    public EstadoCita[]  getEstadosCitas() {
+
+    public EstadoCita[] getEstadosCitas() {
         return EstadoCita.values();
     }
-    
+
     public Cita getCitaActual() {
         return citaActual;
     }
@@ -79,37 +69,28 @@ public class CitaControlador implements Serializable {
     public List<Cita> getCitas() {
         return citas;
     }
-    
+
     public void setCitas(List<Cita> citas) {
         this.citas = citas;
     }
-    
+
     public void doGuardarEditado() {
-        
         citaActual = citaDAO.actualizar(citaActual);
         this.citas = citaDAO.buscarTodosByMedico(medicoControlador.getMedicoActual().getId());
-      }
+    }
 
     public void doFinalizar() {
-  
         citaActual.setEstado(EstadoCita.COMPLETADA);
         doGuardarEditado();
     }
-    
-    public void doAnular() {    
+
+    public void doAnular() {
         citaActual.setEstado(EstadoCita.ANULADA);
         doGuardarEditado();
     }
-    
-    public void doAusente() {    
+
+    public void doAusente() {
         citaActual.setEstado(EstadoCita.AUSENTE);
         doGuardarEditado();
     }
-    
- 
-    
-    
-    
-    
-    
 }

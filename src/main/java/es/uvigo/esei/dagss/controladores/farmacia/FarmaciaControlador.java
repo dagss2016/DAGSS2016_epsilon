@@ -31,7 +31,7 @@ public class FarmaciaControlador implements Serializable {
 
     @Inject
     private AutenticacionControlador autenticacionControlador;
-    
+
     @Inject
     private RecetaControlador recetaControlador;
 
@@ -80,27 +80,24 @@ public class FarmaciaControlador implements Serializable {
             Farmacia farmacia = farmaciaDAO.buscarPorNIF(nif);
             if (farmacia == null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "No existe una farmacia con el NIF " + nif, ""));
+            } else if (autenticacionControlador.autenticarUsuario(farmacia.getId(), password,
+                    TipoUsuario.FARMACIA.getEtiqueta().toLowerCase())) {
+                farmaciaActual = farmacia;
+                destino = "privado/index";
             } else {
-                if (autenticacionControlador.autenticarUsuario(farmacia.getId(), password,
-                        TipoUsuario.FARMACIA.getEtiqueta().toLowerCase())) {
-                    farmaciaActual = farmacia;
-                    destino = "privado/index";
-                } else {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Credenciales de acceso incorrectas", ""));
-                }
-
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Credenciales de acceso incorrectas", ""));
             }
         }
         return destino;
     }
-    
-    public void doSuministrar(){        
+
+    public void doSuministrar() {
         recetaControlador.getRecetaActual().setFarmaciaDispensadora(farmaciaActual);
         recetaControlador.getRecetaActual().setEstadoReceta(EstadoReceta.SERVIDA);
         recetaControlador.doGuardarEditado();
     }
-    
-    public void doAnular(){        
+
+    public void doAnular() {
         recetaControlador.getRecetaActual().setEstadoReceta(EstadoReceta.ANULADA);
         recetaControlador.doGuardarEditado();
     }

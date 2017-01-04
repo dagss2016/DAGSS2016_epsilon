@@ -5,7 +5,6 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-
     <ui:composition>
         <p:dialog id="dialogoVerFechas" widgetVar="DialogoVerFechas" modal="true" resizable="false" appendTo="@(body)" header="Fechas Validez">
             <h:form id="formularioVerFechas">
@@ -13,14 +12,14 @@
                     <p:panelGrid columns="2" rendered="#{recetaControlador.recetaActual != null}">                       
                         <p:outputLabel value="Inicio Validez" for="inicioValidez"/>
                         <h:outputText id="inicioValidez" value="#{recetaControlador.recetaActual.inicioValidez}" >
-                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </h:outputText>
                         <p:outputLabel value="Fin Validez" for="finValidez"/>
                         <h:outputText id="finValidez" value="#{recetaControlador.recetaActual.finValidez}" >
-                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </h:outputText>
                     </p:panelGrid>
-                     <br></br>
+                    <br></br>
                     <p:commandButton value="Cerrar" onclick="PF('DialogoVerFechas').hide()"/>
                 </h:panelGroup>
             </h:form>

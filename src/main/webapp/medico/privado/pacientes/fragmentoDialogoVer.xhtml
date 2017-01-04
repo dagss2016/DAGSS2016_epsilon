@@ -10,8 +10,8 @@
         <p:dialog id="dialogoVer" widgetVar="DialogoVer" modal="true" resizable="false" appendTo="@(body)" header="Datos Paciente">
             <h:form id="formularioVer">
                 <h:panelGroup id="display">
-                     <h1>#{citaControlador.citaActual.paciente.nombre} #{citaControlador.citaActual.paciente.apellidos} </h1>
-                     <br></br>
+                    <h1>#{citaControlador.citaActual.paciente.nombre} #{citaControlador.citaActual.paciente.apellidos} </h1>
+                    <br></br>
                     <p:panelGrid columns="2" rendered="#{citaControlador.citaActual != null}">
                         <p:outputLabel value="ID:" for="id"/>
                         <h:outputText id="id" value="#{citaControlador.citaActual.paciente.id}" />
@@ -43,7 +43,7 @@
                         <p:outputLabel value="e-mail:" for="email"/>
                         <h:outputText id="email" value="#{citaControlador.citaActual.paciente.email}" />        
                     </p:panelGrid>
-                     <br></br>
+                    <br></br>
                     <p:commandButton value="Cerrar" onclick="PF('DialogoVer').hide()"/>
                 </h:panelGroup>
             </h:form>

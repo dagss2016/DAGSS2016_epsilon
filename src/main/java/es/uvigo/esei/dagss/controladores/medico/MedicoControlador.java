@@ -4,7 +4,6 @@
 package es.uvigo.esei.dagss.controladores.medico;
 
 import es.uvigo.esei.dagss.controladores.autenticacion.AutenticacionControlador;
-import es.uvigo.esei.dagss.dominio.daos.CitaDAO;
 import es.uvigo.esei.dagss.dominio.daos.MedicoDAO;
 import es.uvigo.esei.dagss.dominio.entidades.Medico;
 import es.uvigo.esei.dagss.dominio.entidades.TipoUsuario;
@@ -15,11 +14,6 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-
-/**
- *
- * @author ribadas
- */
 
 @Named(value = "medicoControlador")
 @SessionScoped
@@ -32,13 +26,12 @@ public class MedicoControlador implements Serializable {
 
     @Inject
     private AutenticacionControlador autenticacionControlador;
-    
 
     @EJB
     private MedicoDAO medicoDAO;
 
     /**
-     * Creates a new instance of AdministradorControlador
+     * Creates a new instance of MedicoControlador
      */
     public MedicoControlador() {
     }
@@ -98,14 +91,12 @@ public class MedicoControlador implements Serializable {
             Medico medico = recuperarDatosMedico();
             if (medico == null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "No existe ningún médico con los datos indicados", ""));
+            } else if (autenticacionControlador.autenticarUsuario(medico.getId(), password,
+                    TipoUsuario.MEDICO.getEtiqueta().toLowerCase())) {
+                medicoActual = medico;
+                destino = "privado/index";
             } else {
-                if (autenticacionControlador.autenticarUsuario(medico.getId(), password,
-                        TipoUsuario.MEDICO.getEtiqueta().toLowerCase())) {
-                    medicoActual = medico;
-                    destino = "privado/index";
-                } else {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Credenciales de acceso incorrectas", ""));
-                }
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Credenciales de acceso incorrectas", ""));
             }
         }
         return destino;

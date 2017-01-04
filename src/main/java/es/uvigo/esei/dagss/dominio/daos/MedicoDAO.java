@@ -15,7 +15,7 @@ public class MedicoDAO extends GenericoDAO<Medico> {
 
     public Medico buscarPorDNI(String dni) {
         TypedQuery<Medico> q = em.createQuery("SELECT m FROM Medico AS m "
-                                            + "  WHERE m.dni = :dni", Medico.class);
+                + "  WHERE m.dni = :dni", Medico.class);
         q.setParameter("dni", dni);
 
         return filtrarResultadoUnico(q);
@@ -23,9 +23,9 @@ public class MedicoDAO extends GenericoDAO<Medico> {
 
     public Medico buscarPorNumeroColegiado(String numeroColegiado) {
         TypedQuery<Medico> q = em.createQuery("SELECT m FROM Medico AS m "
-                                            + "  WHERE m.numeroColegiado = :numeroColegiado", Medico.class);
+                + "  WHERE m.numeroColegiado = :numeroColegiado", Medico.class);
         q.setParameter("numeroColegiado", numeroColegiado);
-        
+
         return filtrarResultadoUnico(q);
     }
 
@@ -33,9 +33,7 @@ public class MedicoDAO extends GenericoDAO<Medico> {
         TypedQuery<Medico> q = em.createQuery("SELECT m FROM Medico AS m "
                 + "  WHERE (m.nombre LIKE :patron) OR "
                 + "        (m.apellidos LIKE :patron)", Medico.class);
-        q.setParameter("patron","%"+patron+"%");        
+        q.setParameter("patron", "%" + patron + "%");
         return q.getResultList();
     }
-
-    // Completar aqui
 }

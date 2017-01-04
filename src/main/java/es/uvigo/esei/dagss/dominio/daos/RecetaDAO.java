@@ -27,6 +27,5 @@ public class RecetaDAO extends GenericoDAO<Receta> {
                 + "  WHERE r.inicioValidez <= :hoy AND r.finValidez >= :hoy" + " ORDER BY r.prescripcion.id ", Receta.class);
         q.setParameter("hoy", Calendar.getInstance().getTime());
         return q.getResultList();
-
     }
 }
