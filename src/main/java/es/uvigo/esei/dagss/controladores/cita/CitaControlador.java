@@ -48,9 +48,6 @@ public class CitaControlador implements Serializable {
 
     @PostConstruct
     public void inicializar() {
-    }
-
-    public void citasHoy() {
         this.citas = citaDAO.buscarTodosByMedico(medicoControlador.getMedicoActual().getId());
     }
 

@@ -48,7 +48,7 @@ public class RecetaSimpleStrategy implements RecetaStrategy {
     }
 
     //Cuenta dias entre dos fechas.
-    public int calculaDias(Date inicio, Date fin) {
+    private int calculaDias(Date inicio, Date fin) {
         Calendar calendario = Calendar.getInstance();
         calendario.setTime(inicio);
         int dias = 1; //Se inicializa a 1 para que cuente el dia actual

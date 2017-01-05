@@ -16,7 +16,7 @@
                                         var="medicamento" itemLabel="#{medicamento.nombre}" itemValue="#{medicamento}" forceSelection="true" groupBy="#{prescripcionControlador.getMedicamentoGroup(medicamento)}">
                             <o:converter converterId="omnifaces.ListConverter" list="#{prescripcionControlador.filteredMedicamentos}"/>
                             <f:facet name="itemtip">
-                                <h:panelGrid columns="2" cellpadding="5"> 
+                                <h:panelGrid columns="2" cellpadding="15"> 
                                     <h:outputLabel value="Nombre:" />
                                     <h:outputText value="#{medicamento.nombre}" />
                                     <h:outputLabel value="Fabricante:" />

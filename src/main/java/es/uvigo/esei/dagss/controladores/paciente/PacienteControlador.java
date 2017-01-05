@@ -119,7 +119,7 @@ public class PacienteControlador implements Serializable {
                 //                    if (paciente.getPassword().equals("")) {
                 //                        destino = "privado/cambiarPassword";
                 //                    } else {
-                destino = "privado/index";
+                destino = "paciente/privado/index";
                 //                    }
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Credenciales de acceso incorrectas", ""));

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+>
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="css" name="rez.css"/>
+        <title>re-Z | Sistema de Recetas</title>
+    </h:head>
+    <h:body>        
+        <p:layout fullPage="true">
+            <p:layoutUnit id="content" position="center">
+                <ui:insert name="contenido">Put default content here, if any.</ui:insert>
+            </p:layoutUnit>
+            <p:layoutUnit id="footer" position="south" size="105" style="text-align: center">
+                <h:outputText value="re-Z © 2017"/>
+            </p:layoutUnit>
+        </p:layout>
+    </h:body>
+</html>
+                

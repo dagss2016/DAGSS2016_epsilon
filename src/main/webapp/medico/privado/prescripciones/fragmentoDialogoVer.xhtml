@@ -6,12 +6,11 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition>
-        <p:dialog id="dialogoVer" widgetVar="DialogoVer" modal="true" resizable="false" appendTo="@(body)" header="Datos Prescripción">
+        <p:dialog id="dialogoVer" widgetVar="DialogoVer" modal="true" resizable="false" appendTo="@(body)" header="Datos Prescripción"  width="800">
             <h:form id="formularioVer">
-                <h:panelGroup id="display">
-                    <div class="ui-g-12">
-                        <div class="ui-g-6">
-                            <h1>Datos del Medicamento</h1>
+                <div class="ui-g">
+                    <div class="ui-g-12 ui-g-nopad">
+                        <div class="ui-g-6">  <h1>Datos del Medicamento</h1>
                             <br></br>   
                             <p:panelGrid columns="2" rendered="#{prescripcionControlador.prescripcionActual != null}">
                                 <p:outputLabel value="Nombre:" for="nombre"/>
@@ -24,10 +23,8 @@
                                 <h:outputText id="principioActivo" value="#{prescripcionControlador.prescripcionActual.medicamento.principioActivo}" />
                                 <p:outputLabel value="Número Dosis:" for="numeroDosis"/>
                                 <h:outputText id="numeroDosis" value="#{prescripcionControlador.prescripcionActual.medicamento.numeroDosis}" />
-                            </p:panelGrid>    
-                        </div> <!-- izquierda -->
-                        <div class="ui-g-6">
-                            <h1>Datos de la Prescripción</h1>
+                            </p:panelGrid>    </div>
+                        <div class="ui-g-6"><h1>Datos de la Prescripción</h1>
                             <br></br>   
                             <p:panelGrid columns="2" rendered="#{prescripcionControlador.prescripcionActual != null}">
                                 <p:outputLabel value="Dosis:" for="dosis"/>
@@ -42,35 +39,33 @@
                                 </h:outputText>    
                                 <p:outputLabel value="Indicaciones:" for="indicaciones"/>
                                 <h:outputText id="indicaciones" value="#{prescripcionControlador.prescripcionActual.indicaciones}"/>
-                            </p:panelGrid>
-                        </div>    
-                    </div>  <!-- cuerpo -->
-                    <div class="ui-g-12">
-                        <h1>Recetas Generadas</h1>
-                        <br></br> 
-                        <p:dataTable id="tablaListadoRecetas"
-                                     value="#{prescripcionControlador.prescripcionActual.recetas}"
-                                     var="receta" 
-                                     paginator="true" paginatorPosition="bottom" rows="10" rowKey="#{receta.id}"
-                                     emptyMessage="No hay Recetas actualmente">>
-                            <p:column headerText="Inicio Validez">
-                                <p:outputLabel value="#{receta.inicioValidez}">
-                                    <f:convertDateTime dateStyle="short"/>
-                                </p:outputLabel>
-                            </p:column> 
-                            <p:column headerText="Fin Validez">
-                                <p:outputLabel value="#{receta.finValidez}">
-                                    <f:convertDateTime dateStyle="short"/>
-                                </p:outputLabel>
-                            </p:column>
-                            <p:column headerText="Estado">
-                                <p:outputLabel value="#{receta.estado} " rendered="#{receta.estado ne 'SERVIDA'}"/>
-                                <p:outputLabel value="#{receta.estado} (#{receta.farmaciaDispensadora.nombreFarmacia})" rendered="#{receta.estado eq 'SERVIDA'}"/>
-                            </p:column>
-                        </p:dataTable>
-                        <p:commandButton value="Cerrar" onclick="PF('DialogoVer').hide()"/>
-                    </div> <!-- contenido -->
-                </h:panelGroup>
+                            </p:panelGrid></div>
+                        <div class="ui-g-12"><h1>Recetas Generadas</h1>
+                            <br></br> 
+                            <p:dataTable id="tablaListadoRecetas"
+                                         value="#{prescripcionControlador.prescripcionActual.recetas}"
+                                         var="receta" 
+                                         paginator="true" paginatorPosition="bottom" rows="10" rowKey="#{receta.id}"
+                                         emptyMessage="No hay Recetas actualmente">>
+                                <p:column headerText="Inicio Validez">
+                                    <p:outputLabel value="#{receta.inicioValidez}">
+                                        <f:convertDateTime dateStyle="short"/>
+                                    </p:outputLabel>
+                                </p:column> 
+                                <p:column headerText="Fin Validez">
+                                    <p:outputLabel value="#{receta.finValidez}">
+                                        <f:convertDateTime dateStyle="short"/>
+                                    </p:outputLabel>
+                                </p:column>
+                                <p:column headerText="Estado">
+                                    <p:outputLabel value="#{receta.estado} " rendered="#{receta.estado ne 'SERVIDA'}"/>
+                                    <p:outputLabel value="#{receta.estado} (#{receta.farmaciaDispensadora.nombreFarmacia})" rendered="#{receta.estado eq 'SERVIDA'}"/>
+                                </p:column>
+                            </p:dataTable>
+                            <p:commandButton value="Cerrar" onclick="PF('DialogoVer').hide()"/>
+                        </div>
+                    </div>
+                </div>
             </h:form>
         </p:dialog>
     </ui:composition>

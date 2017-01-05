@@ -1,33 +1,36 @@
-<?xml version='1.0' encoding='UTF-8' ?> 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <h:outputStylesheet library="css" name="dagss.css"/>
-        <title>re-Z | Sistema de Recetas</title>
+        <title> 
+            <ui:insert name="titulo"></ui:insert>
+        </title>
     </h:head>
     <h:body>
-        <div id="pagina" class="ui-g">
-            <div id="encabezado" class="ui-g-12">
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" size="110" style="text-align: center">
                 <p:graphicImage value="/resources/img/logo.png"/>
-                <h3> <ui:insert name="tituloPagina"></ui:insert> </h3>
+                <div>
+                    <ui:insert name="tituloPagina"></ui:insert>
+                </div>
                 <h:messages />
-            </div> <!-- encabezado -->
-            <div id="cuerpo" class="ui-g-12">
-                <div id="izquierda" class="ui-g-2">
-                        <ui:insert name="izquierda"/>                
-                </div> <!-- izquierda -->
-                <div id="contenido" class="ui-g-10">
-                    <ui:insert name="contenido"/>
-                </div> <!-- contenido -->
-            </div>  <!-- cuerpo -->
-            <div id="pie" class="ui-grid-col-12">
-                <h2> re-Z © 2017 </h2>
-            </div>
-        </div> <!-- pagina -->
+            </p:layoutUnit>
+
+            <p:layoutUnit id="footer" position="south" size="100" style="text-align: center">
+                <h:outputText value="re-Z © 2017"/>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="west" size="232" header="Menu">
+                <ui:insert name="izquierda">Put default content here, if any.</ui:insert>    
+            </p:layoutUnit>
+
+            <p:layoutUnit position="center">
+                <ui:insert name="contenido">Put default content here, if any.</ui:insert>
+            </p:layoutUnit>
+        </p:layout>
     </h:body>
 </html>
-                

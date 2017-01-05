@@ -108,7 +108,7 @@ public class AdministradorControlador implements Serializable {
                 if (autenticacionControlador.autenticarUsuario(administrador.getId(), password,
                                                                TipoUsuario.ADMINISTRADOR.getEtiqueta().toLowerCase())) {
                     administradorActual = administrador;
-                    destino = "privado/index";
+                    destino = "administrador/privado/index";
                 } else {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Credenciales de acceso incorrectas", ""));
                 }

@@ -94,9 +94,9 @@ public class MedicoControlador implements Serializable {
             } else if (autenticacionControlador.autenticarUsuario(medico.getId(), password,
                     TipoUsuario.MEDICO.getEtiqueta().toLowerCase())) {
                 medicoActual = medico;
-                destino = "privado/index";
+                destino = "medico/privado/index";
             } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Credenciales de acceso incorrectas", ""));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Credenciales de acceso incorrectas", ""));
             }
         }
         return destino;

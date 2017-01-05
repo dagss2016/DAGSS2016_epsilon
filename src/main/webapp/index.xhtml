@@ -1,22 +1,29 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <ui:composition template="./plantillas/plantillaComun.xhtml"  >
-        <ui:define name="tituloPagina">
-            Menú de acceso principal
-        </ui:define>
-        <ui:define name="menu">
-        </ui:define>
-        <ui:define name="contenido">
-            <h2>Opciones generales</h2>
-            <ul>
-                <li>    <h:link outcome="/paciente/login" value="Acceso para pacientes" /> </li>
-                <li>    <h:link outcome="/medico/login" value="Acceso para médicos" /> </li>
-                <li>    <h:link outcome="/farmacia/login" value="Acceso para farmacias" /> </li>
-                <li>    <h:link outcome="/administrador/login" value="Acceso para administradores" /> </li>
-            </ul>
-        </ui:define>
-    </ui:composition>
-</html>
+<ui:composition template="./plantillas/plantillaIndex.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="contenido">
+        <p:growl id="mensajes" life="5000" />
+        <div id="intro">
+            <p><p:graphicImage value="/resources/img/logo.png"/></p>
+            <p><h:outputText value="¡Bienvenido!"/></p>               
+        </div>
+        <br></br>
+        <h:form>
+            <p:dock position="top" itemWidth="80" maxWidth="20">
+                <p:menuitem value="Pacientes" icon="/resources/img/paciente.png" onclick="PF('DialogoPacLogin').show()"/>
+                <p:menuitem value="Médicos" icon="/resources/img/medico.png" onclick="PF('DialogoMedLogin').show()" />
+                <p:menuitem value="Farmacias" icon="/resources/img/farmacia.png" onclick="PF('DialogoFarLogin').show()"/>
+                <p:menuitem value="Administradores" icon="/resources/img/admin.png" onclick="PF('DialogoAdmLogin').show()"/>
+            </p:dock>   
+        </h:form>  
+        <ui:include src="/paciente/login.xhtml"/>
+        <ui:include src="/medico/login.xhtml"/>
+        <ui:include src="/farmacia/login.xhtml"/>
+        <ui:include src="/administrador/login.xhtml"/>
+    </ui:define> 
+</ui:composition>
