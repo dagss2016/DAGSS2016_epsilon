@@ -35,12 +35,7 @@ public class RecetaSimpleStrategy implements RecetaStrategy {
         for (int i = 0; i < numBotes; i++) {
             calendario_fin.setTime(calendario_ini.getTime());
             calendario_fin.add(Calendar.DAY_OF_MONTH, MARGEN_VALIDEZ);
-            Receta receta = new Receta();
-            receta.setPrescripcion(p);
-            receta.setCantidad(1);
-            receta.setEstado(EstadoReceta.GENERADA);
-            receta.setInicioValidez(calendario_ini.getTime());
-            receta.setFinValidez(calendario_fin.getTime());
+            Receta receta = new Receta(p, 1,calendario_ini.getTime(),calendario_fin.getTime(),EstadoReceta.GENERADA);
             recetas.add(receta);
             calendario_ini.add(Calendar.DAY_OF_MONTH, diasPorBote);
         }
