@@ -4,9 +4,6 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
-    <f:metadata>
-        <f:event type="preRenderView" listener="#{recetaControlador.recetasValidas()}"/>
-    </f:metadata>
     <ui:define name="titulo">
         Re-Z | Farmacia | Recetas
     </ui:define>
@@ -20,7 +17,7 @@
         <p:growl id="mensajes" life="3000" />
         <h:form id="formularioListado">     
             <p:dataTable id="tablaListado"
-                         value="#{recetaControlador.recetas}"
+                         value="#{recetaControlador.recetasValidas}"
                          var="receta" 
                          selection="#{recetaControlador.recetaActual}"
                          selectionMode="single" 

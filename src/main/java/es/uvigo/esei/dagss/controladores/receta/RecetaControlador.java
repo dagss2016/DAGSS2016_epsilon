@@ -21,6 +21,7 @@ import javax.inject.Inject;
 public class RecetaControlador implements Serializable {
 
     List<Receta> recetas;
+    List<Receta> recetasValidas;
     List<Receta> recetasPrescripcion;
     Receta recetaActual;
 
@@ -38,11 +39,9 @@ public class RecetaControlador implements Serializable {
 
     @PostConstruct
     public void inicializar() {
-        this.recetas = recetaDAO.buscarTodos();
-    }
+        //this.recetas = recetaDAO.buscarTodos();
+        this.recetasValidas = recetaDAO.recetasValidas();
 
-    public void recetasValidas() {
-        this.recetas = recetaDAO.recetasValidas();
     }
 
     public void buscarPorPrescripcion() {
@@ -100,4 +99,15 @@ public class RecetaControlador implements Serializable {
         this.recetasPrescripcion = recetasPrescripcion;
     }
 
+    public List<Receta> getRecetasValidas() {
+        return recetasValidas;
+    }
+
+    public void setRecetasValidas(List<Receta> recetasValidas) {
+        this.recetasValidas = recetasValidas;
+    }
+
+    
+    
 }
+
